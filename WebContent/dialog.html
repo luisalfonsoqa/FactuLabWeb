@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI Dialog - Modal form</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <style>
+    body { font-size: 70%; }
+  </style>
+  <script>
+  $(function() {
+	  var dialogContenido = $('#dialogContenido');
+	  var dialogForm = $('#dialogForm');
+	  var btnOpenDialog = $('#btnOpenDialog');
+	  
+	  dialogForm.dialog({
+      autoOpen: false,
+      height: 300,
+      width: 350,
+      modal: true,
+      buttons: {
+        "Aceptar": function() {
+          var bValid = true;
+          if ( bValid ) {
+        	alert('llenar');
+            $( this ).dialog( "close" );
+          }
+        },
+        "Cancelar": function() {
+          $( this ).dialog( "close" );
+        }
+      },
+      close: function() {
+    	dialogContenido.empty();
+      }
+    });
+ 
+    btnOpenDialog
+      .button()
+      .click(function() {
+    	  dialogForm.dialog( "open" );
+      });
+  });
+  </script>
+  
+<div id="dialogForm">
+  <form>
+	  <table id="dialogContenido">
+	  	<tr>
+	  		<td>
+	  			<input type="text" name="1" value="23"/>
+	  		</td>
+	  	</tr>
+	  </table>
+  </form>
+</div>
+<button id="btnOpenDialog">Open</button>
+
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>css3menu.com</title>
+		<!-- Start css3menu.com HEAD section -->
+	<link rel="stylesheet" href="css/css3menu1/style.css" type="text/css" /><style type="text/css">._css3m{display:none}</style>
+	<!-- End css3menu.com HEAD section -->
+
+	
+</head>
+<ul id="css3menu1" class="topmenu">
+	<li class="topfirst"><a href="#" style="height:15px;line-height:15px;">Inicio</a></li>
+	<li class="topmenu"><a href="#" style="height:15px;line-height:15px;">Nueva Atención</a></li>
+	<li class="topmenu"><a href="#" style="height:15px;line-height:15px;"><span>Pendientes</span></a>
+	<ul>
+		<li class="subfirst"><a href="#">Análisis Tomados</a></li>
+	</ul></li>
+	<li class="toplast"><a href="#" style="height:15px;line-height:15px;">Reporte</a></li>
+</ul><p class="_css3m"><a href="http://css3menu.com/">menu css3</a> by Css3Menu.com</p>
+<!-- End css3menu.com BODY section -->
+
+

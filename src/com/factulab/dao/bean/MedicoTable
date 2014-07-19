@@ -1,0 +1,9 @@
+MEDICO
+
+especialidad	smallint	Checked
+direccion	varchar(100)	Checked
+cmp	varchar(20)	Checked
+apemat	varchar(50)	Unchecked
+apepat	varchar(50)	Unchecked
+nombre	varchar(50)	Unchecked
+idMedico	smallint	Unchecked

@@ -1,0 +1,18 @@
+numSerie	smallint	Unchecked
+numTicket	bigint	Unchecked
+fecha	datetime	Unchecked
+idPaciente	smallint	Checked
+idInstitucion	smallint	Checked
+ruc	varchar(11)	Unchecked
+nombre	varchar(250)	Unchecked
+direccion	varchar(250)	Checked
+subtotal	decimal(18, 2)	Unchecked
+igv	decimal(18, 2)	Unchecked
+total	decimal(18, 2)	Unchecked
+estado	smallint	Unchecked
+tipopago	varchar(5)	Checked
+nomsede	varchar(200)	Checked
+nomusuario	varchar(200)	Checked
+idFranquicia	smallint	Checked
+impresora	nchar(50)	Checked
+idTicket	bigint	Unchecked

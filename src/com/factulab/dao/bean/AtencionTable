@@ -1,0 +1,13 @@
+idFranquicia	smallint	Checked
+total	decimal(10, 2)	Checked
+descuento	decimal(10, 2)	Checked
+codOmega	varchar(10)	Checked
+estado	varchar(15)	Checked
+facturado	int	Unchecked
+fecha	datetime	Checked
+subtotal	decimal(10, 2)	Unchecked
+paciente	int	Unchecked
+usuario	smallint	Unchecked
+medico	smallint	Unchecked
+institucion	smallint	Unchecked
+idAtencion	int	Unchecked

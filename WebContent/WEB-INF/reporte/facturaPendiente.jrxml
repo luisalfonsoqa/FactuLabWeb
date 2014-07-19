@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="facturaPendiente" pageWidth="210" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="195" leftMargin="5" rightMargin="10" topMargin="10" bottomMargin="5" whenResourceMissingType="Empty" isIgnorePagination="true" uuid="44ce218f-9e7d-4448-afed-302299121825">
+	<property name="ireport.zoom" value="2.853116706110016"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="487"/>
+	<parameter name="TOTAL" class="java.lang.Double"/>
+	<parameter name="NOMBRE" class="java.lang.String"/>
+	<parameter name="DIRECCION" class="java.lang.String"/>
+	<parameter name="SERIE" class="java.lang.String"/>
+	<parameter name="NUMERO" class="java.lang.String"/>
+	<parameter name="FECHA" class="java.lang.String"/>
+	<parameter name="RUC" class="java.lang.String"/>
+	<parameter name="SUBTOTAL" class="java.lang.Double"/>
+	<parameter name="IGV" class="java.lang.String"/>
+	<parameter name="RESUMEN" class="java.lang.String"/>
+	<parameter name="MONTOIGV" class="java.lang.Double"/>
+	<parameter name="SEDE" class="java.lang.String"/>
+	<parameter name="USUARIO" class="java.lang.String"/>
+	<parameter name="PACIENTE" class="java.lang.String"/>
+	<parameter name="IMPRESORA" class="java.lang.String"/>
+	<parameter name="TIPOPAGO" class="java.lang.String"/>
+	<field name="nombreAnalisis" class="java.lang.String"/>
+	<field name="monto" class="java.math.BigDecimal"/>
+	<field name="cantidad" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="127" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="170" height="23" uuid="caf393be-8729-4cb0-a553-453a76fa0d94"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="10" isBold="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single" tabStopWidth="40"/>
+				</textElement>
+				<text><![CDATA[CENTRO MEDICO HEMATOLOGICO EIRL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="78" y="56" width="29" height="12" uuid="5eb0af2f-d7b5-47c6-8510-fd5474a02be2"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Ticket]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="107" y="56" width="63" height="12" uuid="50c96fb2-f39c-4fc7-9d7e-c34aba0882bc"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="9"/>
+					<paragraph lineSpacing="Single" leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{SERIE}+"-"+$P{NUMERO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="56" width="16" height="12" uuid="6278cf96-c41c-49a6-8dd0-dc15edecf93d"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Ruc]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="26" width="170" height="23" uuid="6278cf96-c41c-49a6-8dd0-dc15edecf93d"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[ Av Guardia Civil C-8 Urb. Miraflores-Castilla-Piura-Piura Telf: (073) 345594]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="56" width="56" height="12" uuid="6278cf96-c41c-49a6-8dd0-dc15edecf93d"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+					<paragraph lineSpacing="Single" leftIndent="2"/>
+				</textElement>
+				<text><![CDATA[20484079197]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="87" width="16" height="12" uuid="5880dd8d-958b-408e-ba3b-1f26a2994228"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Ruc]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="16" y="87" width="154" height="12" uuid="868deb8a-ff80-495c-80bb-d6d14e7b6fdb"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+					<paragraph lineSpacing="Single" leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{RUC}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="16" y="99" width="154" height="23" uuid="8b70cfb0-a293-44b2-a042-63742bae1c5a">
+					<printWhenExpression><![CDATA[!$P{NOMBRE}.equals($P{PACIENTE})]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="9"/>
+					<paragraph lineSpacing="Single" leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NOMBRE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="99" width="16" height="12" uuid="5880dd8d-958b-408e-ba3b-1f26a2994228"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Pac]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="16" y="75" width="89" height="12" uuid="d7eef630-f151-4edd-8c2c-94a210bea380"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+					<paragraph lineSpacing="Single" leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{FECHA}+"hrs"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="75" width="16" height="12" uuid="5880dd8d-958b-408e-ba3b-1f26a2994228"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Fec]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="17" splitType="Stretch">
+			<staticText>
+				<reportElement x="20" y="0" width="120" height="12" uuid="e241148d-d9b9-4824-b5f6-f01611b8deb8"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="9" isBold="false" isUnderline="false"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<text><![CDATA[Descripción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="140" y="0" width="30" height="12" uuid="e241148d-d9b9-4824-b5f6-f01611b8deb8"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="9" isBold="false" isUnderline="false"/>
+					<paragraph rightIndent="2"/>
+				</textElement>
+				<text><![CDATA[Monto]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="12" width="170" height="1" uuid="dd1e8724-afb9-451b-b804-9d8df4a99d57"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="0" width="20" height="12" uuid="ef7885ef-0d9d-4a82-9a6e-11ecfa081604"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="9" isBold="false" isUnderline="false"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<text><![CDATA[Cant]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField>
+				<reportElement x="20" y="0" width="120" height="12" uuid="567e5e43-c58a-48d9-9668-1e0968f81363"/>
+				<textElement textAlignment="Left">
+					<font fontName="Times New Roman" size="9"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombreAnalisis}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="140" y="0" width="30" height="12" uuid="21c07604-4c7f-4edb-bc6d-b195732d265a"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+					<paragraph rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{monto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="20" height="12" uuid="a66a86ca-79df-4ffa-984c-995c794331ac"/>
+				<textElement textAlignment="Left">
+					<font fontName="Times New Roman" size="9"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="129" splitType="Stretch">
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="133" y="29" width="37" height="12" uuid="958171f0-6c35-4026-a454-54c730e675a1"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+					<paragraph lineSpacing="Single" rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TOTAL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="121" y="17" width="12" height="12" uuid="17d129ba-f478-4a2e-afa9-9d370d37e84b"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[%:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="84" y="17" width="22" height="12" uuid="17d129ba-f478-4a2e-afa9-9d370d37e84b"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="9" isBold="false" isItalic="false"/>
+					<paragraph lineSpacing="Single" rightIndent="2"/>
+				</textElement>
+				<text><![CDATA[IGV]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="106" y="17" width="15" height="12" uuid="958171f0-6c35-4026-a454-54c730e675a1"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="9"/>
+					<paragraph rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{IGV}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="84" y="5" width="49" height="12" uuid="17d129ba-f478-4a2e-afa9-9d370d37e84b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Sub Total:]]></text>
+			</staticText>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="133" y="17" width="37" height="12" uuid="958171f0-6c35-4026-a454-54c730e675a1"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+					<paragraph lineSpacing="Single" rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{MONTOIGV}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="106" y="29" width="27" height="12" uuid="17d129ba-f478-4a2e-afa9-9d370d37e84b"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="9" isBold="false" isItalic="false"/>
+					<paragraph lineSpacing="Single" rightIndent="2"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="133" y="5" width="37" height="12" uuid="958171f0-6c35-4026-a454-54c730e675a1"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="9"/>
+					<paragraph rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{SUBTOTAL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="78" width="24" height="12" uuid="23bf977c-be70-4f8b-be8f-303c35d42eb3"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Sede:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="51" width="170" height="1" uuid="dd1e8724-afb9-451b-b804-9d8df4a99d57"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="24" y="78" width="146" height="12" uuid="4189dab6-07ae-45a0-af7d-7b4d8c9fd483"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="9"/>
+					<paragraph lineSpacing="Single" leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{SEDE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="51" width="170" height="22" uuid="e241148d-d9b9-4824-b5f6-f01611b8deb8"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="9" isBold="false" isItalic="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[No se aceptan cambios en el comprobante. GRACIAS POR SU PREFERENCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="90" width="55" height="12" uuid="6278cf96-c41c-49a6-8dd0-dc15edecf93d"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Nº de Serie:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="55" y="90" width="115" height="12" uuid="4189dab6-07ae-45a0-af7d-7b4d8c9fd483"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="9"/>
+					<paragraph lineSpacing="Single" leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{IMPRESORA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

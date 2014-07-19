@@ -1,0 +1,8 @@
+IMPRESORA
+
+serieMaquina	nchar(50)	Unchecked
+serieTicket	smallint	Unchecked
+numeroTicket	bigint	Unchecked
+idImpresora	smallint	Unchecked
+nombre	nchar(50)	Unchecked
+activo	int	Unchecked

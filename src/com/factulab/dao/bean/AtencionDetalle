@@ -1,0 +1,6 @@
+idAnalisis	smallint	Unchecked
+cantidad	smallint	Unchecked
+monto	decimal(10, 2)	Unchecked
+precio	decimal(10, 2)	Checked   //Precio sin descuento
+precioUnitario	decimal(10, 2)	Checked //Precio con descuento
+idAtencion	int	Unchecked

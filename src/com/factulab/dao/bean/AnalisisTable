@@ -1,0 +1,8 @@
+nombre	varchar(50)	Unchecked
+seccion	smallint	Unchecked
+precio	numeric(10, 2)	Unchecked
+idAnalisisOmega	varchar(20)	Checked
+abreviatura	varchar(50)	Checked
+unidadMedida	varchar(20)	Checked
+activo	smallint	Checked
+idAnalisis	smallint	Unchecked

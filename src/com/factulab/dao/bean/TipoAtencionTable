@@ -1,0 +1,4 @@
+Tipo de Atencion
+
+idTipoAtencion	smallint	Unchecked
+nombre	varchar(50)	Unchecked

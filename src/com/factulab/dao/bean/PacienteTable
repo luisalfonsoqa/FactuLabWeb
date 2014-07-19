@@ -1,0 +1,18 @@
+idInstitucion	smallint	Unchecked
+idtipopaciente	smallint	Unchecked
+idPaciente	smallint	Unchecked
+fax	varchar(50)	Checked
+email	varchar(50)	Checked
+hist_clinica	varchar(50)	Checked
+celular	varchar(50)	Checked
+telefono	varchar(40)	Checked
+direccion	varchar(200)	Checked
+
+
+sexo	char(1)	Unchecked
+iddistrito	smallint	Checked
+fecnac	datetime	Checked
+dni	varchar(8)	Checked
+apemat	varchar(50)	Unchecked
+apepat	varchar(50)	Unchecked
+nombre	varchar(50)	Unchecked

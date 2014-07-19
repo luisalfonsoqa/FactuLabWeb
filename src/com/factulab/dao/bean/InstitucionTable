@@ -1,0 +1,8 @@
+tarifa	smallint	Unchecked
+nombre	varchar(250)	Unchecked
+idInstitucion	smallint	Unchecked
+facMensual	smallint	Checked
+direccion	varchar(250)	Unchecked
+ruc	varchar(20)	Unchecked
+emailcontacto	varchar(200)	Checked
+nombrecontacto	varchar(200)	Checked 
