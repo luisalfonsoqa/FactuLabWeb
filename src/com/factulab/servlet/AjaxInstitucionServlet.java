@@ -1,6 +1,7 @@
 package com.factulab.servlet;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,6 @@ import com.factulab.dao.bean.Institucion;
 import com.factulab.dao.bean.Usuario;
 import com.factulab.dao.exception.DAOException;
 import com.factulab.dao.exception.FactulabException;
-import com.factulab.dao.util.DAOConstante;
 import com.factulab.exception.FactulabError;
 import com.factulab.service.InstitucionService;
 import com.factulab.servlet.util.ServletConstante;
@@ -72,10 +72,7 @@ public class AjaxInstitucionServlet extends HttpServlet {
 			
 			accion = request.getParameter("accion");
 			if(accion.equals("nuevo")){
-				//jsp = "CargarInsertarAtencionFormServlet";
-				/***************************************************
-			     *                	VALIDAR [NUEVO]
-			     ***************************************************/
+				//1. Leer parametros 
 				String txt_idTarifa = request.getParameter("idTarifa");
 				String txt_idTipoFacturacion= request.getParameter("idTipoFacturacion");
 				String nombre = request.getParameter("nombre");
@@ -83,40 +80,43 @@ public class AjaxInstitucionServlet extends HttpServlet {
 				String direccion = request.getParameter("direccion");
 				String email = request.getParameter("email");
 				String contacto = request.getParameter("contacto");
-				
 				Integer idTarifa = null;
 				Integer idTipoFacturacion = null;
-				try{
-					idTarifa = Integer.parseInt(txt_idTarifa);
-					idTipoFacturacion = Integer.parseInt(txt_idTipoFacturacion);
-					if(idTipoFacturacion != null && idTipoFacturacion != DAOConstante.BD_FACTURACION_INMEDIATA && idTipoFacturacion != DAOConstante.BD_FACTURACION_MENSUAL){
-						throw new FactulabException("Institucion con Tipo de Facturacion incorrecta["+idTipoFacturacion+"]");
-					}
-				} catch (Exception e){
-					throw new FactulabException("Ingresar nueva Institucion["+idTarifa+", "+idTipoFacturacion+"] incorrecto. "+e.getMessage());
-				}
+
+				//2. Validacion de parametros no cadenas
+				try{ idTarifa = Integer.parseInt(txt_idTarifa);
+				} catch (Exception e){ throw new FactulabException("Accion["+accion+"] Tarifa["+txt_idTarifa+"] incorrecto. "+e.getMessage());}
+				try{ idTipoFacturacion = Integer.parseInt(txt_idTipoFacturacion);
+				} catch (Exception e){ throw new FactulabException("Accion["+accion+"] TipoFacturacion["+txt_idTipoFacturacion+"] incorrecto. "+e.getMessage());}
 				
-				/***************************************************
-			     *                	INICIAR [NUEVO]
-			     ***************************************************/	
+				//3. Validacion de parametros obligatorios
+				if(nombre != null && !nombre.trim().isEmpty()) nombre = URLDecoder.decode(nombre, "UTF-8");
+				else throw new FactulabException("Accion["+accion+"] Nombre["+nombre+"] incorrecto. ");
+				if(ruc != null && !ruc.trim().isEmpty()) ruc = URLDecoder.decode(ruc, "UTF-8"); 
+				else throw new FactulabException("Accion["+accion+"] Ruc["+ruc+"] incorrecto. ");
+			
+				//4. Validacion de parametros opcionales
+				if(direccion != null && !direccion.trim().isEmpty()) direccion = URLDecoder.decode(direccion, "UTF-8"); 
+				else direccion = "";
+				if(email != null && !email.trim().isEmpty()) email = URLDecoder.decode(email, "UTF-8"); 
+				else email = "";
+				if(contacto != null && !contacto.trim().isEmpty()) contacto = URLDecoder.decode(contacto, "UTF-8"); 
+				else contacto = "";
+				
+				//5. Proceso
 				Institucion i = new Institucion();
 				i.setFacMensual(idTipoFacturacion);
 				i.setNombre(nombre);
 				i.setIdTarifa(idTarifa);
-				i.setDireccion(direccion ==null ? "" : direccion);
-				i.setEmailContacto(email ==null ? "" : email);
-				i.setNombreContacto(contacto ==null ? "" : contacto);
-				i.setRuc(ruc ==null ? "" : ruc);
+				i.setDireccion(direccion);
+				i.setEmailContacto(email);
+				i.setNombreContacto(contacto);
+				i.setRuc(ruc);
 				institucionService.create(i);
 				
-//				String tipo = request.getParameter("tipo");
-//				if(tipo != null && tipo.equals("ajax")){
-					jsp = null;
-					mapper.writeValue(response.getOutputStream(), i);
-					miLog.info("Inserto nueva (ajax) Institución["+i.toString()+"]"+usuarioLogin.getLogUser());
-//				} else {
-//					miLog.info("Inserto nueva Institución["+i.toString()+"]"+usuarioLogin.getLogUser());
-//				}
+				//6. Respuesta
+				mapper.writeValue(response.getOutputStream(), i);
+				miLog.info("Inserto nueva (ajax) Institución["+i.toString()+"]"+usuarioLogin.getLogUser());
 			} else if(accion.equals("buscar")){
 				String tipo = request.getParameter("tipo");
 				boolean all = false;

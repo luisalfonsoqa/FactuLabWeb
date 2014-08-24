@@ -1,1 +1,2 @@
 http://localhost:8780/FactuLabWeb/LoginServlet?device=BIXOLON SRP-270,winspool,Ne02:&usuario=lquispe&clave=lquispe
+http://localhost:9481/FactuLabWeb/LoginServlet?usuario=lquispe&clave=lquispe&device=\\Lab01\HP%20LaserJet%201022,winspool,Ne01:

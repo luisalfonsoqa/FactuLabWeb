@@ -1,6 +1,7 @@
 package com.factulab.servlet;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * Servlet implementation class AjaxMedicoServlet
  */
-public class AjaxMedicoServlet extends HttpServlet {
+public class AjaxMedicoServlet extends HttpServlet{
 	Logger miLog = Logger.getLogger(AjaxMedicoServlet.class);
 	
 	private static final long serialVersionUID = 1L;
@@ -64,6 +65,7 @@ public class AjaxMedicoServlet extends HttpServlet {
 			/***************************************************
 		     *                	VALIDAR
 		     ***************************************************/
+			
 			usuarioLogin = (Usuario) request.getSession().getAttribute(ServletConstante.SESSION_USUARIO);
 			if(usuarioLogin == null) {
 				miLog.error("Usuario no logeado.");
@@ -107,40 +109,47 @@ public class AjaxMedicoServlet extends HttpServlet {
 				mapper.writeValue(response.getOutputStream(), lMedico);
 				miLog.info("Buscar Medico [Fin] por "+criterio+"["+texto+"]"+usuarioLogin.getLogUser());
 			} else if(accion.equals("nuevo")){
-				/***************************************************
-			     *                	VALIDAR [NUEVO]
-			     ***************************************************/
+				//1. Leer parametros 
 				String nombre = request.getParameter("nombre");
 				String apepat = request.getParameter("apepat");
 				String apemat = request.getParameter("apemat");
 				String cmp = request.getParameter("cmp");
 				String txt_idEspecialidad = request.getParameter("idEspecialidad");
 				String direccion = request.getParameter("direccion");
-				
 				Integer idEspecialidad = null;
+
+				//2. Validacion de parametros no cadenas
 				try{
 					idEspecialidad = Integer.parseInt(txt_idEspecialidad);
 				} catch (Exception e){
 					throw new FactulabException("Ingresar nuevo Medico[idEspecialidad = "+txt_idEspecialidad+"] incorrecto. "+e.getMessage());
 				}
-				if(nombre == null || nombre.trim().isEmpty()) throw new FactulabException("Ingresar nuevo Medico[nombre = "+nombre+"] incorrecto. ");
-				if(apepat == null || apepat.trim().isEmpty()) throw new FactulabException("Ingresar nuevo Medico[apepat = "+apepat+"] incorrecto. ");
-				if(apemat == null || apemat.trim().isEmpty()) throw new FactulabException("Ingresar nuevo Medico[apemat = "+apemat+"] incorrecto. ");
-				if(cmp == null || cmp.trim().isEmpty()) throw new FactulabException("Ingresar nuevo Medico[cmp = "+cmp+"] incorrecto. ");
-				//if(direccion == null || direccion.trim().isEmpty()) throw new FactulabException("Ingresar nuevo Medico[direccion = "+direccion+"] incorrecto. ");
+
+				//3. Validacion de parametros obligatorios
+				if(nombre != null && !nombre.trim().isEmpty()) nombre = URLDecoder.decode(nombre, "UTF-8");
+				else throw new FactulabException("Ingresar nuevo Medico[nombre = "+nombre+"] incorrecto. ");
+				if(apepat != null && !apepat.trim().isEmpty()) apepat = URLDecoder.decode(apepat, "UTF-8"); 
+				else throw new FactulabException("Ingresar nuevo Medico[apepat = "+apepat+"] incorrecto. ");
+				if(apemat != null && !apemat.trim().isEmpty()) apemat = URLDecoder.decode(apemat, "UTF-8"); 
+				else throw new FactulabException("Ingresar nuevo Medico[apemat = "+apemat+"] incorrecto. ");
+				if(cmp != null && !cmp.trim().isEmpty()) cmp = URLDecoder.decode(cmp, "UTF-8");
+				else throw new FactulabException("Ingresar nuevo Medico[cmp = "+cmp+"] incorrecto. ");
 				
-				/***************************************************
-			     *                	INICIAR [NUEVO]
-			     ***************************************************/	
+				//4. Validacion de parametros opcionales
+				if(direccion != null && !direccion.trim().isEmpty()) direccion = URLDecoder.decode(direccion, "UTF-8"); 
+				else direccion = "";
+				
+				//5. Proceso
 				Medico m = new Medico();
 				m.setNombre(nombre);
 				m.setApepat(apepat);
 				m.setApemat(apemat);
 				m.setCmp(cmp);
-				m.setDireccion(direccion == null ? "" : direccion);
+				m.setDireccion(direccion);
 				m.setIdEspecialidad(idEspecialidad);
-
 				medicoService.create(m);
+
+				//6. Respuesta
 				mapper.writeValue(response.getOutputStream(), m);
 				miLog.info("Inserto del nuevo Medico["+m.toString()+"]"+usuarioLogin.getLogUser());
 			} else {

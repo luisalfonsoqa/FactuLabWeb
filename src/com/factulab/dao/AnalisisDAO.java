@@ -32,7 +32,7 @@ public class AnalisisDAO {
 		try {
 			Analisis bean = null;
 			cn = new ConectaDB().getConexion();
-			query = "select a.*, s.nombre 'nombreSeccion' from analisis a, seccion s where s.idSeccion = a.seccion and a.idanalisis= ?";
+			query = "select a.*, s.nombre 'nombreSeccion' from analisis a, seccion s where s.idSeccion = a.seccion and a.idanalisis= ? and a.activo = 1";
 			ps = cn.prepareStatement(query);
 			ps.setInt(1, id);
 			rs = ps.executeQuery();
@@ -84,7 +84,7 @@ public class AnalisisDAO {
 			List<Analisis> list = new ArrayList<Analisis>();
 			Analisis bean = null;
 			cn = new ConectaDB().getConexion();
-			query = "select * from analisis where LOWER("+criterio+") like '%"+texto.toLowerCase()+"%' ";
+			query = "select * from analisis where LOWER("+criterio+") like '%"+texto.toLowerCase()+"%' and activo = 1 ";
 			ps = cn.prepareStatement(query);
 			rs = ps.executeQuery();
 			while (rs.next()) {

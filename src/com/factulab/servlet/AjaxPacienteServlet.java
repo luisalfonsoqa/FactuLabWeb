@@ -1,6 +1,7 @@
 package com.factulab.servlet;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -113,45 +114,68 @@ public class AjaxPacienteServlet extends HttpServlet {
 				mapper.writeValue(response.getOutputStream(), lPaciente);
 				miLog.info("Buscar Paciente [Fin] por "+criterio+"["+texto+"]"+usuarioLogin.getLogUser());
 			} else if(accion.equals("nuevo")){
-				/***************************************************
-			     *                	VALIDAR [NUEVO]
-			     ***************************************************/
+				//1. Leer parametros 
 				String txt_idInstitucion = request.getParameter("idInstitucion");
 				String txt_idTipoPaciente = request.getParameter("idTipoPaciente");
+				String txt_idDistrito = request.getParameter("idDistrito");
+				String txt_fecnac = request.getParameter("fecnac");
+				String txt_sexo = request.getParameter("sexo");
+				
 				String nombre = request.getParameter("nombre");
 				String apepat = request.getParameter("apepat");
 				String apemat = request.getParameter("apemat");
 				String dni = request.getParameter("dni");
-				String txt_fecnac = request.getParameter("fecnac"); //Date?
-				String txt_sexo = request.getParameter("sexo");
-				String txt_idDistrito = request.getParameter("idDistrito");
 				String direccion =  request.getParameter("direccion");
+				
 				String telefono =  request.getParameter("telefono");
 				String celular =  request.getParameter("celular");
 				String histClinica =  request.getParameter("histClinica");
 				String email =  request.getParameter("email");
 				String fax =  request.getParameter("fax");
-				
+
 				Integer idInstitucion = null;
 				Integer idTipoPaciente = null;
 				Integer idDistrito = 0;
 				Character sexo = null;
 				Date fecnac;
 				
-				try{
-					idInstitucion = Integer.parseInt(txt_idInstitucion);
-					if(txt_idDistrito != null) idDistrito = Integer.parseInt(txt_idDistrito);
-					idTipoPaciente = Integer.parseInt(txt_idTipoPaciente);
-					sexo = txt_sexo.charAt(0);
-					DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-					fecnac = formatter.parse(txt_fecnac);
-				} catch (Exception e){
-					throw new FactulabException("Ingresar nuevo paciente Paciente["+txt_idInstitucion+", "+txt_idDistrito+", "+txt_idTipoPaciente+", "+txt_sexo+", "+txt_fecnac+"] incorrecto. "+e.getMessage());
-				}
+				//2. Validacion de parametros no cadenas
+				DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+				try { idInstitucion = Integer.parseInt(txt_idInstitucion);
+				} catch (Exception e){ throw new FactulabException("Accion["+accion+"] ID Institucion ["+txt_idInstitucion+"] incorrecto. "+e.getMessage());}
+				try { idDistrito = Integer.parseInt(txt_idDistrito);
+				} catch (Exception e){ throw new FactulabException("Accion["+accion+"] ID Distrito ["+txt_idDistrito+"] incorrecto. "+e.getMessage());}
+				try { idTipoPaciente = Integer.parseInt(txt_idTipoPaciente);
+				} catch (Exception e){ throw new FactulabException("Accion["+accion+"] ID Tipo Paciente ["+txt_idTipoPaciente+"] incorrecto. "+e.getMessage());}
+				try { sexo = txt_sexo.charAt(0);
+				} catch (Exception e){ throw new FactulabException("Accion["+accion+"] Sexo ["+txt_sexo+"] incorrecto. "+e.getMessage());}
+				try{ fecnac = formatter.parse(txt_fecnac);
+				} catch (Exception e){ throw new FactulabException("Accion["+accion+"] Fecha Nacimiento"+txt_fecnac+"] incorrecto. "+e.getMessage());}
 				
-				/***************************************************
-			     *                	INICIAR [NUEVO]
-			     ***************************************************/	
+				//3. Validacion de parametros obligatorios
+				if(nombre != null && !nombre.trim().isEmpty()) nombre = URLDecoder.decode(nombre, "UTF-8");
+				else throw new FactulabException("Accion["+accion+"] Nombre["+nombre+"] incorrecto. ");
+				if(apepat != null && !apepat.trim().isEmpty()) apepat = URLDecoder.decode(apepat, "UTF-8"); 
+				else throw new FactulabException("Accion["+accion+"] Apellido Paterno["+apepat+"] incorrecto. ");
+				if(apemat != null && !apemat.trim().isEmpty()) apemat = URLDecoder.decode(apemat, "UTF-8"); 
+				else throw new FactulabException("Accion["+accion+"] Apellido Materno["+apemat+"] incorrecto. ");
+				//DNI no requiere 
+				
+				//4. Validacion de parametros opcionales
+				if(direccion != null && !direccion.trim().isEmpty()) direccion = URLDecoder.decode(direccion, "UTF-8");
+				else direccion = "";
+				if(telefono != null && !telefono.trim().isEmpty()) telefono = URLDecoder.decode(telefono, "UTF-8");
+				else telefono = "";
+				if(celular != null && !celular.trim().isEmpty()) celular = URLDecoder.decode(celular, "UTF-8");
+				else celular = "";
+				if(histClinica != null && !histClinica.trim().isEmpty()) histClinica = URLDecoder.decode(histClinica, "UTF-8");
+				else histClinica = "";
+				if(email != null && !email.trim().isEmpty()) email = URLDecoder.decode(email, "UTF-8");
+				else email = "";
+				if(fax != null && !fax.trim().isEmpty()) fax = URLDecoder.decode(fax, "UTF-8");
+				else fax = "";
+	
+				//5. Proceso
 				Paciente p = new Paciente();
 				p.setIdInstitucion(idInstitucion);
 				p.setIdTipoPaciente(idTipoPaciente);
@@ -169,8 +193,9 @@ public class AjaxPacienteServlet extends HttpServlet {
 				p.setEmail(email);
 				p.setFax(fax);
 				pacienteService.create(p);
-				
 				Paciente paciente = pacienteService.obtenerPacientePorID(p.getIdPaciente());
+				
+				//6. Respuesta
 				mapper.writeValue(response.getOutputStream(), paciente);
 				miLog.info("Inserto del nuevo Paciente["+p.toString()+"]"+usuarioLogin.getLogUser());
 			} else {

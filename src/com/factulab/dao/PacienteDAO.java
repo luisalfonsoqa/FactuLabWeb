@@ -81,9 +81,9 @@ public class PacienteDAO {
 			throw new DAOException(query,e.getMessage(),e); 
 		} finally {
 			try {
+				if (rs != null) rs.close();
 				if (ps != null) ps.close();
 				if (cn != null) cn.close();
-				if (rs != null) rs.close();
 			} catch (SQLException e) {
 				miLog.error(e.getMessage(),e);
 			}
@@ -104,15 +104,19 @@ public class PacienteDAO {
 		ResultSet rs = null;
 		try {
 			cn = new ConectaDB().getConexion();
-			ps0 = cn.prepareStatement("select idpaciente from paciente where dni like ?");
-			ps0.setString(1, p.getDni().trim());
-			rs0 = ps0.executeQuery();
-			if(rs0.next()) {
-				String msgError = "Error al grabar el paciente. El número de DNI["+p.getDni()+"] pertenece al Paciente["+rs0.getInt("idpaciente")+"].";
+			if(!p.getDni().equals(DAOConstante.BD_DNI_ADULTO_MAYOR) && !p.getDni().equals(DAOConstante.BD_DNI_NACIDOS)){
+				ps0 = cn.prepareStatement("select idpaciente from paciente where dni like ?");
+				ps0.setString(1, p.getDni().trim());
+				rs0 = ps0.executeQuery();
+				if(rs0.next()) {
+					String msgError = "Error al grabar el paciente. El número de DNI["+p.getDni()+"] pertenece al Paciente["+rs0.getInt("idpaciente")+"].";
+					ps0.close();
+					cn.close();
+					throw new FactulabException(msgError);
+				}
+				rs0.close();
 				ps0.close();
-				throw new FactulabException(msgError);
 			}
-			
 			query = "EXEC FacturaLabSQL.dbo.InsertarPaciente @idInstitucion = ?, @idtipopaciente = ? , @nombre = ?, @apepat = ?, @apemat = ?, "
 					+ "@dni = ?, @fecnac = ?, @sexo = ?, @idDistrito= ?, @direccion = ?, "
 					+ "@telefono = ?, @celular = ?, @email = ?, @hist_clinica = ?, @fax = ?";
@@ -141,9 +145,7 @@ public class PacienteDAO {
 				p.setIdPaciente(rs.getInt("idPaciente"));
 			}
 			rs.close();
-			rs0.close();
 			ps.close();
-			ps0.close();
 			cn.close();
 		} catch (FactulabException e) {
 			throw new FactulabException(e.getMessage(),e);  
@@ -151,10 +153,10 @@ public class PacienteDAO {
 			throw new DAOException(query,e.getMessage(),e); 
 		} finally {
 			try {
-				if (ps != null) ps.close();
-				if (ps0 != null) ps0.close();
 				if (rs != null) rs.close();
 				if (rs0 != null) rs0.close();
+				if (ps != null) ps.close();
+				if (ps0 != null) ps0.close();
 				if (cn != null) cn.close();
 			} catch (SQLException e) {
 				miLog.error(e.getMessage(),e);
@@ -233,8 +235,8 @@ public class PacienteDAO {
 			throw new DAOException(query,e.getMessage(),e); 
 		} finally {
 			try {
-				if (ps != null) ps.close();
 				if (rs != null) rs.close();
+				if (ps != null) ps.close();
 				if (cn != null) cn.close();
 			} catch (SQLException e) {
 				miLog.error(e.getMessage(),e);

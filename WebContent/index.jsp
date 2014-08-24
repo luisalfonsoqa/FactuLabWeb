@@ -65,10 +65,10 @@ function valida(){
 function executeCommands(inputparms)
 {
 	var oShell = new ActiveXObject("WScript.Shell");
-	sRegVal = 'HKEY_CURRENT_USER\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Windows\\Device'
-	sDefault = ""
-	sDefault = oShell.RegRead(sRegVal)
-	GetDefaultPrinter = sDefault
+	sRegVal = 'HKEY_CURRENT_USER\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Windows\\Device';
+	sDefault = "";
+	sDefault = oShell.RegRead(sRegVal);
+	GetDefaultPrinter = sDefault;
 	return GetDefaultPrinter;
 }
 </script>

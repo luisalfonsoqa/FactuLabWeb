@@ -58,8 +58,8 @@ public class MedicoDAO {
 			throw new DAOException(query,e.getMessage(),e); 
 		} finally {
 			try {
-				if (ps != null) ps.close();
 				if (rs != null) rs.close();
+				if (ps != null) ps.close();
 				if (cn != null) cn.close();
 			} catch (SQLException e) {
 				miLog.error(e.getMessage(),e);
@@ -109,8 +109,8 @@ public class MedicoDAO {
 			throw new DAOException(query,e.getMessage(),e); 
 		} finally {
 			try {
-				if (ps != null) ps.close();
 				if (rs != null) rs.close();
+				if (ps != null) ps.close();
 				if (cn != null) cn.close();
 			} catch (SQLException e) {
 				miLog.error(e.getMessage(),e);
@@ -153,8 +153,8 @@ public class MedicoDAO {
 			throw new DAOException(query,e.getMessage(),e); 
 		} finally {
 			try {
-				if (ps != null) ps.close();
 				if (rs != null) rs.close();
+				if (ps != null) ps.close();
 				if (cn != null) cn.close();
 			} catch (SQLException e) {
 				miLog.error(e.getMessage(),e);

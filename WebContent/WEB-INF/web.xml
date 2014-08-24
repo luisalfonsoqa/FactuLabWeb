@@ -179,13 +179,13 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>ReporteCajeroServlet</display-name>
-    <servlet-name>ReporteCajeroServlet</servlet-name>
-    <servlet-class>com.factulab.servlet.ReporteCajeroServlet</servlet-class>
+    <display-name>ReporteAnalisisServlet</display-name>
+    <servlet-name>ReporteAnalisisServlet</servlet-name>
+    <servlet-class>com.factulab.servlet.ReporteAnalisisServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ReporteCajeroServlet</servlet-name>
-    <url-pattern>/ReporteCajeroServlet</url-pattern>
+    <servlet-name>ReporteAnalisisServlet</servlet-name>
+    <url-pattern>/ReporteAnalisisServlet</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>

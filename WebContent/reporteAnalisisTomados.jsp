@@ -8,7 +8,7 @@
 		</table>
 		<div class="f_accordion">
 			<h3>ANALISIS TOMADOS</h3>
-			<form id="frmAnalisisTomados" action="ReporteCajeroServlet"  >
+			<form id="frmAnalisisTomados" action="ReporteAnalisisServlet"  >
 				<table style="width: 100%;" border="0">
 					<tr>
 						<td style="width: 100px; height: 30px;" >Fecha Inicio:</td>
@@ -30,9 +30,10 @@
 						<td><input type="text" name="fechaFin" class="datepicker" id="fechaFin" style="display: inline-block;" size="12"></td>
 						<td></td><td></td>
 						<td align="center" valign="bottom" >
-							<a id="btnExportarXLS" class="button"><span style="width: 100px; display: inline-block;">Exportar a Excel</span></a>
+							<a id="btnReporteCajeroXLS" class="button"><span style="width: 100px; display: inline-block;">Reporte (<%=uLogin.getUsuario() %>)</span></a>
+							<a id="btnReporteAnalisisPDF" class="button"><span style="width: 100px; display: inline-block;">Reporte Analisis</span></a>
 							<input type="hidden" name="formato" id="formato"/>
-							<input type="hidden" name="accion" id="accion" value="repAteFact"/>
+							<input type="hidden" name="accion" id="accion"/>
 						</td>
 					</tr>
 				</table>
@@ -43,17 +44,18 @@
 </div>
 <script>
 	$(function() {
-		var btnExportarXLS = $('#btnExportarXLS');
-		var btnExportarPDF = $('#btnExportarPDF');
+		var btnReporteCajeroXLS = $('#btnReporteCajeroXLS');
+		var btnReporteAnalisisPDF = $('#btnReporteAnalisisPDF');
 		var formato = $('#formato');
+		var accion = $('#accion');
 		var fechaIni =$('#fechaIni');
 		var fechaFin =$('#fechaFin');
-		btnExportarXLS.click(function(){
+		btnReporteCajeroXLS.click(function(){
 			var msgError = '';
 			if(fechaFin.val() == '') msgError = 'Ingrese la Fecha Final';
 			if(fechaIni.val() == '') msgError = 'Ingrese la Fecha Inicio';
 			
-			
+			accion.val('repCajero');
 			if(msgError == '') {
 				formato.val('XLS');
 				$('#frmAnalisisTomados').submit();
@@ -62,11 +64,12 @@
 			}
 		});
 		
-		btnExportarPDF.click(function(){
+		btnReporteAnalisisPDF.click(function(){
 			var msgError = '';
 			if(fechaFin.val() == '') msgError = 'Ingrese la Fecha Final';
 			if(fechaIni.val() == '') msgError = 'Ingrese la Fecha Inicio';
 			
+			accion.val('repAnalisis');
 			if(msgError == '') {
 				formato.val('PDF');
 				$('#frmAnalisisTomados').submit();

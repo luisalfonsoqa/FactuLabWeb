@@ -1,6 +1,6 @@
 <%@ include file="header.jsp"%>
 <%
-	List<Institucion> lInstitucion = (List<Institucion>) request.getAttribute("instituciones"); 
+List<Institucion> lInstitucion = (List<Institucion>) request.getAttribute("instituciones"); 
 List<Tarifa> tarifas = (List<Tarifa>) request.getAttribute("tarifas");
 List<Especialidad> especialidades = (List<Especialidad>) request.getAttribute("especialidades");
 %>
@@ -218,11 +218,13 @@ List<Especialidad> especialidades = (List<Especialidad>) request.getAttribute("e
         	<td><label >DNI:</label></td>
             <td><input name="dni" id="txtDniNP" maxlength="8" onkeypress="return isNumberKey(event);" /></td>
         	<td><label >Fecha Nac:</label></td>
-            <td><input type="text" id="txtNacimientoNP" name="fecnac" class="datepicker_nacimiento" style="display: inline-block;" size="12"></td>
+            <td><input type="text" id="txtNacimientoNP" name="fecnac" class="datepicker_nacimiento" style="display: inline-block;" size="12">(dd-mm-yyyy)</td>
        		<td><label >Sexo:</label></td>
-        	<td  style="display: inline-block;">	
-        		<input type="radio" name="sexo" value="M" checked="checked" style="display: inline;"> M&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="radio" name="sexo" value="F" style="display: inline;"> F&nbsp;&nbsp;&nbsp;&nbsp;
+        	<td >	
+        		<div style="display: inline-block;" id="txtSexoNP">
+        		<input type="radio" name="sexoNP" value="M" checked="checked" style="display: inline;"> M&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="radio" name="sexoNP" value="F" style="display: inline;"> F&nbsp;&nbsp;&nbsp;&nbsp;
+				</div>
 			</td>
        </tr>
        <tr>
@@ -681,34 +683,60 @@ List<Especialidad> especialidades = (List<Especialidad>) request.getAttribute("e
 	      title: 'Nuevo Paciente',
 	      buttons: {
 	        "Aceptar": function() {
-				var arrChkBox = document.getElementsByName("sexo");
-				var sexo = '';
-				if($(arrChkBox[0]).attr('checked')) sexo=$(arrChkBox[0]).val();
-				else sexo=$(arrChkBox[1]).val();
+	        	var sexo = $('input:radio[name=sexoNP]:checked').val();
+				
 				var msg="";
-				    	if($('#sltInstitucionNP').val()==null)
-				            msg+="<br/>- Institucion";
-				        if($('#sltTipoPacienteNP').val()==null)
-				            msg+="<br/>- Tipo de Paciente";
-				        if($('#txtNombreNP').val()==null || $.trim($('#txtNombreNP').val())=="")
-				            msg+="<br/>- Nombre";
-				        if($('#txtPaternoNP').val()==null || $.trim($('#txtPaternoNP').val())=="")
-				            msg+="<br/>- Apellido Paterno";
-				        if($('#txtMaternoNP').val()==null || $.trim($('#txtMaternoNP').val())=="")
-				            msg+="<br/>- Apellido Materno";
-				        if($('#txtNacimientoNP').val()==null || $.trim($('#txtNacimientoNP').val())=="")
-				            msg+="<br/>- Fecha de Nacimiento";
-				        if($('#txtDniNP').val()==null || $.trim($('#txtDniNP').val())=="")
-				             msg+="<br/>- DNI";
-				        if($('#sltDistritoNP').val() == null || $.trim($('#sltDistritoNP').val())=="")
-				        	 msg+="<br/>- Distrito";
-				        if($('#sltInstitucionNP').val() == null || $.trim($('#sltInstitucionNP').val())=="")
-				        	msg+="<br/>- Institución";
-				        
+				var accion = 'nuevo';
+				var fecnac = $('#txtNacimientoNP').val();
+				var idInstitucion = $('#sltInstitucionNP').val();
+				var idTipoPaciente = $('#sltTipoPacienteNP').val();
+				var idDistrito = $('#sltDistritoNP').val();
+				
+				var nombre = $('#txtNombreNP').val();
+				var apepat = $('#txtPaternoNP').val();
+				var apemat = $('#txtMaternoNP').val();
+				var dni = $('#txtDniNP').val();
+				
+				var direccion = $('#txtDireccionNP').val();
+				var telefono = $('#txtTelefonoNP').val();
+				var celular = $('#txtCelularNP').val();
+				var histClinica = $('#txtHistClinicaNP').val();
+				var email = $('#txtEmailNP').val();
+				var fax = $('#txtFaxNP').val();
+				
+		    	if(idInstitucion==null) msg+="<br/>- Institucion";
+		        if(idTipoPaciente==null) msg+="<br/>- Tipo de Paciente";
+		        if(idInstitucion == null || $.trim(idInstitucion)=="") msg+="<br/>- Institución";
+		        if(fecnac==null || $.trim(fecnac)=="") msg+="<br/>- Fecha de Nacimiento";
+		        
+		        if(idDistrito == null || $.trim(idDistrito) == "") msg+="<br/>- Distrito";
+				if(nombre == null || $.trim(nombre)=="") msg+="<br/>- Nombre";
+				if(apepat == null || $.trim(apepat)=="") msg+="<br/>- Apellido Paterno";
+				if(apemat == null || $.trim(apemat)=="") msg+="<br/>- Apellido Materno";
+				if(dni == null || $.trim(dni)=="") msg+="<br/>- DNI";
+				
 				if(msg==""){
 				    $.ajax({
 					     url:'AjaxPacienteServlet',
-					     data: $("#frmNuevoPaciente").serialize(),
+					     data: {
+					    	 accion: accion,
+					    	 idInstitucion: idInstitucion,
+					    	 idTipoPaciente: idTipoPaciente,
+					    	 idDistrito: idDistrito,
+					    	 fecnac: fecnac,
+					    	 sexo: sexo,
+					    	 nombre: encodeURIComponent(nombre),
+					    	 apepat: encodeURIComponent(apepat),
+					    	 apemat: encodeURIComponent(apemat),
+					    	 dni: dni,
+					    	 direccion: encodeURIComponent(direccion),
+					    	 telefono: encodeURIComponent(telefono),
+					    	 celular: encodeURIComponent(celular),
+					    	 histClinica: encodeURIComponent(histClinica),
+					    	 email: encodeURIComponent(email),
+					    	 fax: encodeURIComponent(fax)
+							},
+					     //data: $("#frmNuevoPaciente").serialize(),
 					     dataType: "json",
 					     contentType: 'application/json',
 					     mimeType: 'application/json',
@@ -819,22 +847,34 @@ List<Especialidad> especialidades = (List<Especialidad>) request.getAttribute("e
 	      title: 'Nueva Institución',
 	      buttons: {
 	        "Aceptar": function() {
-				var msg="";
-				if($('#sltTarifaNI').val()==null)
-		            msg+="<br/>- Tarifa";		
-				if($('#sltTipoFacturacionNI').val()==null)
-		            msg+="<br/>- Tipo de Facturación";		
-		        if($('#txtNombreNI').val()==null || $.trim($('#txtNombreNI').val())=="")
-		            msg+="<br/>- Nombre";
-		        //if($('#txtDireccionNI').val()==null || $.trim($('#txtDireccionNI').val()).length < 1)
-		        //msg+="<br/>- Dirección";
-		        if($('#txtRucNI').val()==null || $.trim($('#txtRucNI').val()).length < 11)
-		            msg+="<br/>- RUC";
+	        	var msg="";
+				var accion = 'nuevo';
+				var idTarifa = $('#sltTarifaNI').val();
+				var idTipoFacturacion = $('#sltTipoFacturacionNI').val();
+				var nombre = $('#txtNombreNI').val();
+				var ruc = $('#txtRucNI').val(); 
+				var direccion = $('#txtDireccionNI').val(); 
+				var email = $('#txtEmailNI').val(); 
+				var contacto = $('#txtContactoNI').val(); 
+				
+				if(idTarifa==null) msg+="<br/>- Tarifa";
+				if(idTipoFacturacion==null) msg+="<br/>- Tipo de Facturación";
+		        if(nombre==null || $.trim(nombre)=="") msg+="<br/>- Nombre";
+		        if(ruc==null || $.trim(ruc).length < 11) msg+="<br/>- RUC";
 				if(msg==""){
-					//$("#frmNuevaInstitucion").submit();
 					 $.ajax({
 					     url:'AjaxInstitucionServlet',
-					     data: $("#frmNuevaInstitucion").serialize(),
+					     data: {
+					    	 accion: accion,
+					    	 idTarifa: idTarifa,
+					    	 idTipoFacturacion: idTipoFacturacion,
+					    	 nombre: encodeURIComponent(nombre),
+					    	 ruc: encodeURIComponent(ruc),
+					    	 direccion: encodeURIComponent(direccion),
+					    	 email: encodeURIComponent(email),
+					    	 contacto: encodeURIComponent(contacto)
+							},
+					     //data: $("#frmNuevaInstitucion").serialize(),
 					     dataType: "json",
 					     contentType: 'application/json',
 					     mimeType: 'application/json',
@@ -883,19 +923,32 @@ List<Especialidad> especialidades = (List<Especialidad>) request.getAttribute("e
 	      buttons: {
 	        "Aceptar": function() {
 				var msg="";
-				if($('#txtNombreNM').val()==null  || $.trim($('#txtNombreNM').val())=="") msg+="<br/>- Nombre";		
-				if($('#txtApePatNM').val()==null  || $.trim($('#txtApePatNM').val())=="") msg+="<br/>- Apellido paterno";
-				if($('#txtApeMatNM').val()==null  || $.trim($('#txtApeMatNM').val())=="") msg+="<br/>- Apellido materno";
-				if($('#txtCmpNM').val()==null  || $.trim($('#txtCmpNM').val())=="") msg+="<br/>- CMP";
-				if($('#sltEspecialidadNM').val()==null || $('#sltEspecialidadNM').val()== "") msg+="<br/>- Especialidad";
-		        //if($('#txtDireccionNM').val()==null || $.trim($('#txtDireccionNM').val())=="") msg+="<br/>- Dirección";
+				var accion = 'nuevo';
+				var nombre = $('#txtNombreNM').val();
+				var apepat = $('#txtApePatNM').val();
+				var apemat = $('#txtApeMatNM').val();
+				var cmp = $('#txtCmpNM').val(); 
+				var idEspecialidad = $('#sltEspecialidadNM').val(); 
+				var direccion = '';
+				if(nombre==null  || $.trim(nombre)=="") msg+="<br/>- Nombre";		
+				if(apepat==null  || $.trim(apepat)=="") msg+="<br/>- Apellido paterno";
+				if(apemat==null  || $.trim(apemat)=="") msg+="<br/>- Apellido materno";
+				if(cmp==null  || $.trim(cmp)=="") msg+="<br/>- CMP";
+				if(idEspecialidad==null || idEspecialidad== "") msg+="<br/>- Especialidad";
 				if(msg==""){
 				    $.ajax({
 					     url:'AjaxMedicoServlet',
-					     data: $("#frmNuevoMedico").serialize(),
+					     data: {
+					    	 accion: accion,
+					    	 nombre: encodeURIComponent(nombre),
+					    	 apepat: encodeURIComponent(apepat),
+					    	 apemat: encodeURIComponent(apemat),
+					    	 cmp: encodeURIComponent(cmp),
+					    	 idEspecialidad: idEspecialidad,
+					    	 direccion: direccion
+							},
+					     //data: $("#frmNuevoMedico").serialize(),
 					     dataType: "json",
-					     contentType: 'application/json',
-					     mimeType: 'application/json',
 					     success: function (data) {
 					    	 if(data.msgError === undefined) {
 					    		 t_medico.val(data.idMedico);

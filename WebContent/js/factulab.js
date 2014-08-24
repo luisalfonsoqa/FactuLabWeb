@@ -21,8 +21,8 @@
 	        showOn: "button",
 	        buttonImage: "images/calendar.gif",
 	        buttonImageOnly: true,
-	        dateFormat: "yy-mm-dd",
-	        defaultDate: "1970-01-01",
+	        dateFormat: "dd-mm-yy",
+	        defaultDate: "01-01-1970",
 	        changeMonth: true,
             changeYear: true
 	    });

@@ -303,14 +303,15 @@ public class AtencionDAO {
 		try {
 			cn = new ConectaDB().getConexion();
 			query = "select d.idAtencion, a.facturado, (CONVERT(CHAR(11),a.fecha,101) + CONVERT(CHAR( 5),a.fecha,114)) 'fecha', p.apepat + ' ' + p.apemat + ' '+ p.nombre 'nombrePaciente', m.apepat + ' '+ m.apemat + ' ' +  m.nombre 'nombreMedico' ,l.nombre 'nombreAnalisis', a.codOmega, d.cantidad, d.monto "
-					+ "from atenciondetalle d, atencion a, paciente p, medico m, analisis l WHERE p.idPaciente = a.paciente and d.idAtencion = a.idAtencion and m.idMedico = a.medico and l.idAnalisis = d.idAnalisis and a.usuario = ? "
+					+ "from atenciondetalle d, atencion a, paciente p, medico m, analisis l WHERE p.idPaciente = a.paciente and d.idAtencion = a.idAtencion and m.idMedico = a.medico and l.idAnalisis = d.idAnalisis ";
+			if(idUsuario != null) query += "and a.usuario = ? "
 			+ "and CONVERT(DATE, a.fecha, 111) between CONVERT(DATE, '"+formato.format(fechaIni)+"', 111) and CONVERT(DATE, '"+formato.format(fechaFin)+"', 111) ";
 			if(horaIni != null && horaFin != null) 
 				query += "and CONVERT(INT,CONVERT(CHAR(2),a.fecha,114)) between "+horaIni+" and "+horaFin;
 			query += " order by fecha";
 			
 			ps = cn.prepareStatement(query);
-			ps.setInt(1, idUsuario);
+			if(idUsuario != null) ps.setInt(1, idUsuario);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				a = new ReporteAnalisisDetalle();
@@ -321,7 +322,6 @@ public class AtencionDAO {
 				a.setNombreAnalisis(rs.getString("nombreAnalisis").toUpperCase());
 				a.setCantidad(rs.getInt("cantidad"));
 				a.setCodigoOmega(rs.getString("codOmega"));
-				a.setMonto(rs.getBigDecimal("monto"));
 				a.setMonto(rs.getBigDecimal("monto"));
 				
 				Integer int_facturado = rs.getInt("facturado");

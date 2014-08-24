@@ -31,7 +31,7 @@ public class ServiceUtil {
             			instiAnali.getFactor(),
             			instiAnali.getTipoMonto()));
     			//Validacion Adicional
-    			if(instiAnali.getIdInstitucion() != atencionForm.getInstitucion().getIdInstitucion())
+    			if(instiAnali.getIdInstitucion().compareTo(atencionForm.getInstitucion().getIdInstitucion()) != 0)
     				throw new FactulabException("Problema de integridad de Datos. La Institucion ["+atencionForm.getInstitucion().getIdInstitucion()+"] no coincide con la institución ["+instiAnali.getIdInstitucion()+"] del analisis con descuento por institucion.");
     			analisisForm.setIdInstitucionDescuento(atencionForm.getInstitucion().getIdInstitucion());
     		}

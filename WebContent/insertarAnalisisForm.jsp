@@ -193,6 +193,12 @@
 		var criterio=$("#sltCriterio");
 		var texto=$("#txtTexto");
 		
+		var membersToList; //agregado
+		var page_index; //agregado
+		var items_per_page; //agregado
+		var max_elem; //agregado
+
+		
 		btnCargarDialogoAnalisis.click(function(){
         	var jsonCriterio=[{valor:'nombre',texto:'Nombre'}];
         	
@@ -211,16 +217,13 @@
 		});
 		    
 		function preDisplayList(pi, jq){
-		    page_index=pi;
-		    items_per_page = 7;
-		    max_elem = Math.min((page_index+1) * items_per_page, membersToList.length);
+			page_index=pi;
+	        items_per_page = 7;
+	        max_elem = Math.min((page_index+1) * items_per_page, membersToList.length);
 	        if(tipoBusqueda=='Analisis'){
 	        	displayListAnalisis(jsonList);
 	        }
-	        /*if(tipoBusqueda=='Institucion'){
-	            displayListInstitucion(jsonList);
-	        }*/
-		    return false;
+	        return false;
 		}
 		
 		function displayListAnalisis(json){
@@ -302,13 +305,14 @@
 	  	}
 	  	
 		function paginarLista(json){ 
-			membersToList=json;
-		    var optInit = { callback: preDisplayList };
-		    optInit.num_edge_entries = 0;
-		    optInit.prev_text = "Prev";
-		    optInit.next_text = "Next";
-		    $("#Pagination").pagination(membersToList.length, optInit);
-		   
+		    membersToList=json;
+	        var optInit = {
+	            callback: preDisplayList
+	        };
+	        optInit.num_edge_entries = 0;																							//NUMERO DE EDGE ENTRIES
+	        optInit.prev_text = "Prev";																								//TEXTO PREV
+	        optInit.next_text = "Next";
+	        $("#Pagination").pagination(membersToList.length, optInit);
 		}
 
 		function llenarDatosAnalisis(analisis){

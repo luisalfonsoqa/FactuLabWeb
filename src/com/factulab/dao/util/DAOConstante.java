@@ -16,5 +16,8 @@ public class DAOConstante {
 	public static String BD_FORMATO_FECHA_INSERT = "dd-MM-yyyy";
 	public static int BD_TIPO_TICKET_INMEDIATA = 1;
 	public static int BD_TIPO_TICKET_PENDIENTE = 0;
+	
+	public static String BD_DNI_NACIDOS = "00000001";
+	public static String BD_DNI_ADULTO_MAYOR = "00000002"; 
 }
 

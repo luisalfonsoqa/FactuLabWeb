@@ -40,5 +40,36 @@ public class InstiAnali implements Serializable {
 				+ idInstitucion + ", tipoMonto=" + tipoMonto + ", factor="
 				+ factor + "]";
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((idAnalisis == null) ? 0 : idAnalisis.hashCode());
+		result = prime * result
+				+ ((idInstitucion == null) ? 0 : idInstitucion.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		InstiAnali other = (InstiAnali) obj;
+		if (idAnalisis == null) {
+			if (other.idAnalisis != null)
+				return false;
+		} else if (!idAnalisis.equals(other.idAnalisis))
+			return false;
+		if (idInstitucion == null) {
+			if (other.idInstitucion != null)
+				return false;
+		} else if (!idInstitucion.equals(other.idInstitucion))
+			return false;
+		return true;
+	}
     
 }

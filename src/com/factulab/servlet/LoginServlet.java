@@ -94,7 +94,9 @@ public class LoginServlet extends HttpServlet {
 				request.getSession().removeAttribute(ServletConstante.SESSION_VISTA);
 				miLog.info("Cargando Modulo Mantenimiento. Usuario["+usuarioLogin.toString()+"]"+usuarioLogin.getLogUser());
 				
-				response.sendRedirect("../FactLabWeb/tiles/Login?usuario="+txt_usuario+"&clave="+txt_clave);
+				//response.sendRedirect("../FactLabWeb/tiles/Login?usuario="+txt_usuario+"&clave="+txt_clave);
+				response.sendRedirect("http://localhost:9081/FactLabWeb/tiles/Login?usuario="+txt_usuario+"&clave="+txt_clave);
+				
 //				response.sendRedirect("../FactLabWeb/IngresarServlet?idApp="+ServletConstante.ID_APP_REP
 //						+"&idSession="+usuarioLogin.getId()+"&usuario="+usuarioLogin.getUsuario()+"&idSede="+usuarioLogin.getIdSede());
 			}

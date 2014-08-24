@@ -1,7 +1,9 @@
-<!doctype html>
-<html lang="us">
+<?xml version="1.0" encoding="UTF-8"?>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-<meta charset="utf-8">
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 <title>FactuLab Web</title>
 <link rel="stylesheet" href="css/jquery.pagination.css" type="text/css"/>
 <link href="css/humanity/jquery-ui-1.10.4.custom.css" rel="stylesheet">
@@ -60,7 +62,7 @@ if (request.getSession() == null  || uLogin == null) {
 			<td><h3 style="width: 500px;">SITEMA DE FACTURACION - FACTULAB</h3></td>
 			<td rowspan="2" valign="bottom">
 				<!-- form action="LogoffServlet" method="post"> 
-				<input id="btnLogOff" type="submit" class="button" value="Cerrar Sesi髇"/>
+				<input id="btnLogOff" type="submit" class="button" value="Cerrar Sesi贸n"/>
 				</form-->
 			</td>	
 		</tr>
@@ -86,9 +88,9 @@ if (request.getSession() == null  || uLogin == null) {
 	<div align="center" style="width: 900px;">
 		<ul id="css3menu1" class="topmenu"> 
 			<li class="topfirst"><a href="/FactuLabWeb/principal.jsp" style="height:15px;line-height:15px;"><span>Inicio</span></a></li>
-			<li class="topmenu"><a href="/FactuLabWeb/CargarInsertarAtencionFormServlet" style="height:15px;line-height:15px;"><span>Nueva Atenci髇</span></a></li>
+			<li class="topmenu"><a href="/FactuLabWeb/CargarInsertarAtencionFormServlet" style="height:15px;line-height:15px;"><span>Nueva Atenci贸n</span></a></li>
 			<li class="topmenu"><a href="/FactuLabWeb/CargarFacturarPendientesFormServlet" style="height:15px;line-height:15px;"><span>Pendientes</span></a></li>
-			<li class="toplast"><a href="/FactuLabWeb/reporteAnalisisTomados.jsp" style="height:15px;line-height:15px;"><span>An醠isis Tomados</span></a></li>
+			<li class="toplast"><a href="/FactuLabWeb/reporteAnalisisTomados.jsp" style="height:15px;line-height:15px;"><span>An谩lisis Tomados</span></a></li>
 		</ul>
 	</div>
 </td>
@@ -97,10 +99,10 @@ if (request.getSession() == null  || uLogin == null) {
 <td align="center">
 	<div align="center" style="width: 1200px;">
 		<a href="/FactuLabWeb/principal.jsp" class="button"><span style="width: 150px; display: inline-block;">Inicio</span></a>&nbsp;&nbsp;&nbsp;
-		<a href="/FactuLabWeb/CargarInsertarAtencionFormServlet" class="button"><span style="width: 150px; display: inline-block;">Nueva Atenci髇</span></a>&nbsp;&nbsp;&nbsp;
+		<a href="/FactuLabWeb/CargarInsertarAtencionFormServlet" class="button"><span style="width: 150px; display: inline-block;">Nueva Atenci贸n</span></a>&nbsp;&nbsp;&nbsp;
 		<a href="/FactuLabWeb/CargarFacturarPendientesFormServlet" class="button"><span style="width: 150px; display: inline-block;">Pendientes</span></a>&nbsp;&nbsp;&nbsp;
 		<a href="/FactuLabWeb/reporteAnalisisTomados.jsp" class="button"><span style="width: 150px; display: inline-block;">Reporte</span></a>&nbsp;&nbsp;&nbsp;
-		<a href="/FactuLabWeb/LogoffServlet" class="button"><span style="width: 150px; display: inline-block;">Cerrar Sesi髇</span></a>
+		<a href="/FactuLabWeb/LogoffServlet" class="button"><span style="width: 150px; display: inline-block;">Cerrar Sesi贸n</span></a>
 	</div>
 </td>
 </tr>
