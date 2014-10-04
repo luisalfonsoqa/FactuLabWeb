@@ -7,6 +7,7 @@
 	<parameter name="CODOMEGA" class="java.lang.String"/>
 	<parameter name="IDATENCION" class="java.lang.Integer"/>
 	<parameter name="PACIENTE" class="java.lang.String"/>
+	<parameter name="EDAD" class="java.lang.Integer"/>
 	<field name="nombre" class="java.lang.String"/>
 	<field name="abreviatura" class="java.lang.String"/>
 	<field name="cantidad" class="java.lang.Integer"/>
@@ -17,7 +18,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="41" splitType="Stretch">
+		<band height="53" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="170" height="17" uuid="caf393be-8729-4cb0-a553-453a76fa0d94"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
@@ -26,47 +27,61 @@
 				<text><![CDATA[CENTRO MEDICO HEMATOLOGICO]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="40" y="17" width="37" height="12" uuid="47f90b60-b388-4271-a0c2-12dd62ee7fea"/>
+				<reportElement x="45" y="17" width="32" height="12" uuid="47f90b60-b388-4271-a0c2-12dd62ee7fea"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom">
 					<font fontName="Times New Roman" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{IDATENCION}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="40" y="29" width="130" height="12" uuid="86512bc7-7a7b-45b9-b54e-c9923e1f4cdf"/>
+				<reportElement x="37" y="29" width="133" height="12" uuid="86512bc7-7a7b-45b9-b54e-c9923e1f4cdf"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom">
 					<font fontName="Times New Roman" size="10" isStrikeThrough="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{PACIENTE}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="109" y="17" width="61" height="12" uuid="51a838da-efd3-4be7-9416-ce7504d65a9f"/>
+				<reportElement x="112" y="17" width="58" height="12" uuid="51a838da-efd3-4be7-9416-ce7504d65a9f"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom">
 					<font fontName="Times New Roman" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{CODOMEGA}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="17" width="38" height="12" uuid="b53366d1-b429-4f23-abad-5923669c6466"/>
-				<textElement textAlignment="Right" verticalAlignment="Bottom">
+				<reportElement x="0" y="17" width="45" height="12" uuid="b53366d1-b429-4f23-abad-5923669c6466"/>
+				<textElement verticalAlignment="Bottom">
 					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
 				</textElement>
-				<text><![CDATA[Atención]]></text>
+				<text><![CDATA[Atención:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="29" width="38" height="12" uuid="b53366d1-b429-4f23-abad-5923669c6466"/>
-				<textElement textAlignment="Right" verticalAlignment="Bottom">
+				<reportElement x="0" y="29" width="37" height="12" uuid="b53366d1-b429-4f23-abad-5923669c6466"/>
+				<textElement verticalAlignment="Bottom">
 					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
 				</textElement>
 				<text><![CDATA[Cliente:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="77" y="17" width="32" height="12" uuid="b53366d1-b429-4f23-abad-5923669c6466"/>
-				<textElement textAlignment="Right" verticalAlignment="Bottom">
+				<reportElement x="77" y="17" width="35" height="12" uuid="b53366d1-b429-4f23-abad-5923669c6466"/>
+				<textElement verticalAlignment="Bottom">
 					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
 				</textElement>
 				<text><![CDATA[Omega:]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="0" y="41" width="27" height="12" uuid="070633c2-abe4-4404-9ced-1e4060908efe"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Edad:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="27" y="41" width="50" height="12" uuid="f1564cb6-fe34-42c4-b503-286d1eaa4b0f"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{EDAD} + " años"]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>

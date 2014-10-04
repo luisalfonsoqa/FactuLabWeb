@@ -3,6 +3,8 @@ package com.factulab.dao.bean;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.factulab.dao.util.DAOUtil;
+
 public class Paciente implements Serializable {
 	private static final long serialVersionUID = 1L;
     private Integer idPaciente;
@@ -163,16 +165,10 @@ public class Paciente implements Serializable {
 	}
 	public Integer getEdad() {
 		if(fecnac != null && edad == null) {
-			Date fechaActual = new Date();
-			long año = (long) 365.25;
-			long msecFA = fechaActual.getTime();
-			long msecFN = fecnac.getTime();
-			long msecEdad = msecFA - msecFN;
-			long dias = msecEdad / (24 * 60 * 60 * 1000);
-			long años = dias / año;
-			return (int) años;
+			return DAOUtil.getEdad(fecnac);
+		} else {
+			return null;
 		}
-		return null;
 	}
 	public void setEdad(Integer edad) {
 		this.edad = edad;

@@ -10,9 +10,10 @@ public class ConectaDB {
 				.newInstance();
 
 		String url = "jdbc:sqlserver://WinXPFactulab:1433;databaseName=FacturaLabSQL"; // DESARROLLO
-		// String url = "jdbc:sqlserver://SERVIDOR:1433;databaseName=FacturaLabSQL"; //PRODUCCION
+//		 String url = "jdbc:sqlserver://SERVIDOR:1433;databaseName=FacturaLabSQL"; //PRODUCCION
 
 		Connection cn = DriverManager.getConnection(url, "UserfactuLabSQL", "Factu144User");
+		
 		return cn;
 	}
 }

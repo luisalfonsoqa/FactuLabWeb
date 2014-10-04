@@ -151,7 +151,7 @@ public class AtencionForm implements Serializable {
 				+ ", codigoOmega=" + codigoOmega + ", idAtencion=" + idAtencion
 				+ ", conIGV=" + conIGV + ", tipoPago=" + tipoPago
 				+ ", numSerie=" + numSerie + ", numTicket=" + numTicket
-				+ ", idTicket=" + idTicket + "]";
+				+ ", idTicket=" + idTicket +"]";
 	}
 	public String getTotalConDescuentoString(){
 		return DAOUtil.formatearBigDecimal(this.totalConDescuento);

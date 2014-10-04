@@ -12,6 +12,7 @@ public class HojaTrabajoForm implements Serializable {
 	private String nombrePaciente;
 	private Integer idAtencion;
 	private String codigoOmega;
+	private Integer edad;
 
 	private List<HojaTrabajoDetalleForm> lDetalle;
 
@@ -46,12 +47,18 @@ public class HojaTrabajoForm implements Serializable {
 	public void setlDetalle(List<HojaTrabajoDetalleForm> lDetalle) {
 		this.lDetalle = lDetalle;
 	}
-
 	@Override
 	public String toString() {
 		return "HojaTrabajoForm [nombrePaciente=" + nombrePaciente
 				+ ", idAtencion=" + idAtencion + ", codigoOmega=" + codigoOmega
-				+ "]";
+				+ ", edad=" + edad + "]";
 	}
-	
+
+	public Integer getEdad() {
+		return edad;
+	}
+
+	public void setEdad(Integer edad) {
+		this.edad = edad;
+	}
 }

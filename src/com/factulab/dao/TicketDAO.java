@@ -63,13 +63,9 @@ public class TicketDAO {
 		} catch (Exception e) {
 			throw new DAOException(query,e.getMessage(),e);   
 		} finally {
-			try {
-				if (rs != null) rs.close();
-				if (ps != null) ps.close();
-				if (cn != null) cn.close();
-			} catch (SQLException e) {
-				miLog.error(e.getMessage(),e);
-			}
+			if (rs != null) { try { rs.close(); } catch (SQLException e) { } }
+			if (ps != null) { try { ps.close(); } catch (SQLException e) { } }
+			if (cn != null) { try { cn.close(); } catch (SQLException e) { } }
 		}
 	}
 	/**
@@ -123,13 +119,9 @@ public class TicketDAO {
 		} catch (Exception e) {
 			throw new DAOException(query,e.getMessage(),e);  
 		} finally {
-			try {
-				if (rs != null) rs.close();
-				if (ps != null) ps.close();
-				if (cn != null) cn.close();
-			} catch (SQLException e) {
-				miLog.error(e.getMessage(),e);
-			}
+			if (rs != null) { try { rs.close(); } catch (SQLException e) { } }
+			if (ps != null) { try { ps.close(); } catch (SQLException e) { } }
+			if (cn != null) { try { cn.close(); } catch (SQLException e) { } }
 		}
 	}
 	/**
@@ -183,13 +175,9 @@ public class TicketDAO {
 		} catch (Exception e) {
 			throw new DAOException(query,e.getMessage(),e);  
 		} finally {
-			try {
-				if (rs != null) rs.close();
-				if (ps != null) ps.close();
-				if (cn != null) cn.close();
-			} catch (SQLException e) {
-				miLog.error(e.getMessage(),e);
-			}
+			if (rs != null) { try { rs.close(); } catch (SQLException e) { } }
+			if (ps != null) { try { ps.close(); } catch (SQLException e) { } }
+			if (cn != null) { try { cn.close(); } catch (SQLException e) { } }
 		}
 	}
 }

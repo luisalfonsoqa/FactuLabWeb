@@ -63,6 +63,7 @@ public class AtencionService {
 	        	detalle.setMonto(analisis.getTotalConDescuento());
 	        	detalle.setPrecio(analisis.getPrecioUnitConTarifa());
 	        	detalle.setPrecioUnitario(analisis.getPrecioUnitConDescuento());
+	        	detalle.setDetalleMonto(analisis.getDetalleMontoString());
 	        	atencionDetalleDAO.create(detalle);
 			}
 	        atencionForm.setIdAtencion(atencion.getIdAtencion());

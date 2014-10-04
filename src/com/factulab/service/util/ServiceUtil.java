@@ -22,8 +22,8 @@ public class ServiceUtil {
 	 */
     public static void obtenerPrecioConDescuentos(AtencionForm atencionForm, AnalisisForm analisisForm) throws Exception{
     	for (InstiAnali instiAnali : atencionForm.getlInstiAnali()) {
-    		if(analisisForm.getIdAnalisis().compareTo(instiAnali.getIdAnalisis()) ==0){
-    			//Descuento por Institucion
+    		if(analisisForm.getIdAnalisis().compareTo(instiAnali.getIdAnalisis()) == 0){
+    			//Set precio con Descuentos por Institucion 
     			analisisForm.setPrecioUnitSinTarifa(obtenerPrecioConDescuentosPorInstitucion(
     					instiAnali.getIdInstitucion(), 
     					instiAnali.getIdAnalisis(), 

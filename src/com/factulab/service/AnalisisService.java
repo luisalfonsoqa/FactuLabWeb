@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+
 import com.factulab.dao.AnalisisDAO;
 import com.factulab.dao.bean.Analisis;
 import com.factulab.dao.exception.DAOException;
@@ -24,11 +25,12 @@ public class AnalisisService {
 	}
 	
 	public void agregarAlaAtencion(AtencionForm atencionForm, Analisis analisis) throws ServiceException{
+		 /***
+		  * IDAnalisis Existente
+		  */
 		 for (int x = 0; x < atencionForm.getlAnalisis().size(); x++) {
-            	 if(analisis.getIdAnalisis().compareTo(atencionForm.getlAnalisis().get(x).getIdAnalisis()) ==0){
-            	 /***
-            	  * IDAnalisis Existente
-            	  */
+			 if(analisis.getIdAnalisis().compareTo(atencionForm.getlAnalisis().get(x).getIdAnalisis()) ==0){
+				
             	 agregarAnalisisExistente(atencionForm, atencionForm.getlAnalisis().get(x), x);
             	 return;
              }
@@ -37,7 +39,6 @@ public class AnalisisService {
 		 /**
           * IDAnalisis Nuevo
           */
-		 
 		 AnalisisForm analisisForm = new AnalisisForm(analisis);
 		 analisisForm.setCantidad(1);
 		 //miLog.info("Agregar Analisis nuevo al listado. analisisForm["+analisisForm.toString() + "] atencionForm["+ atencionForm.toString()+"]");
@@ -46,7 +47,7 @@ public class AnalisisService {
 	
 	public void eliminarDelaAtencion(AtencionForm atencionForm, Integer idAnalisis) throws ServiceException{
 		 for (int x = 0; x < atencionForm.getlAnalisis().size(); x++) {
-            if (idAnalisis == atencionForm.getlAnalisis().get(x).getIdAnalisis()) {
+            if (0 == idAnalisis.compareTo(atencionForm.getlAnalisis().get(x).getIdAnalisis())) {
             	eliminarAnalisis(atencionForm, atencionForm.getlAnalisis().get(x));
             	break;
             }
@@ -72,8 +73,11 @@ public class AnalisisService {
 	 */
 	private void agregarAnalisisNuevo(AtencionForm atencionForm, AnalisisForm analisisForm) throws ServiceException{
 		try{
+			
 			//System.out.println("ID de analisis no encontrado, agregando AnalisisForm["+analisisForm.getIdAnalisis()+"]");
 	        //Actualizamos el precio, considerando el descuento por Institucion y Tarifa
+			
+			//Set values to AtencionForm from AnalisisForm 
 			ServiceUtil.obtenerPrecioConDescuentos(atencionForm, analisisForm);
 	        atencionForm.getlAnalisis().add(analisisForm);
 	        actualizarAcomulados(atencionForm);
@@ -120,6 +124,8 @@ public class AnalisisService {
 	 */
 	private void actualizarAcomulados(AtencionForm atencionForm) throws ServiceException{
 		try{
+			String[] detalle = null;
+			
 		   BigDecimal descuentoPorUnidad  = BigDecimal.ZERO;
 		   BigDecimal precioUnitarioConDescuento = BigDecimal.ZERO;
 		   BigDecimal subTotalAcomulado = BigDecimal.ZERO;
@@ -128,24 +134,54 @@ public class AnalisisService {
 		   BigDecimal total = BigDecimal.ZERO;
 		
 		   for (AnalisisForm analisisForm : atencionForm.getlAnalisis()) {
+			   detalle = new String[11];
 		       /**
 		        * Recalculamos el Total sin descuento
 		        */
-			   subTotal = ServiceUtil.redondearNumero(analisisForm.getPrecioUnitConTarifa().multiply(new BigDecimal(analisisForm.getCantidad())));
+//			   System.out.println(analisisForm.getPrecioUnitConTarifa());
+			   detalle[0] = analisisForm.getPrecioUnitConTarifa().toString();
+//			   System.out.println(analisisForm.getCantidad());
+			   detalle[1] = analisisForm.getCantidad().toString();
+			   subTotal = analisisForm.getPrecioUnitConTarifa().multiply(new BigDecimal(analisisForm.getCantidad()));
+//			   System.out.println(subTotal);
+			   detalle[2] = subTotal.toString();
+			   subTotal = ServiceUtil.redondearNumero(subTotal);
+//			   System.out.println(subTotal);
+			   detalle[3] = subTotal.toString();
 		       subTotalAcomulado = subTotalAcomulado.add(subTotal); //TOTAL ACOMULADO SIN DESCUENTO
 		       analisisForm.setTotalSinDescuento(subTotal);
+//		       System.out.println(subTotalAcomulado);
+		       detalle[4] = subTotalAcomulado.toString();
+		       
+		       
 		       //System.out.println("AnalisisServioce - actualizarAcomulados - subTotal - "+analisisForm.getTotalSinDescuento() + " "+subTotal);
 		
 		       /**
-		        * Recalculamos el Total con descuento
+		        * Recalculamos el Total con el porcentaje de descuento ingresado (%)
 		        */
 		       descuentoPorUnidad = analisisForm.getPrecioUnitConTarifa().multiply(atencionForm.getPorcentajeDescuento()).divide(new BigDecimal("100"));
-		       precioUnitarioConDescuento = ServiceUtil.redondearNumero(analisisForm.getPrecioUnitConTarifa().subtract(descuentoPorUnidad));
+//		       System.out.println(descuentoPorUnidad);
+		       detalle[5] = descuentoPorUnidad.toString();
+		       precioUnitarioConDescuento = analisisForm.getPrecioUnitConTarifa().subtract(descuentoPorUnidad);
+//		       System.out.println(precioUnitarioConDescuento);
+		       detalle[6] = precioUnitarioConDescuento.toString();
+		       precioUnitarioConDescuento = ServiceUtil.redondearNumero(precioUnitarioConDescuento);
+//		       System.out.println(precioUnitarioConDescuento);
+		       detalle[7] = precioUnitarioConDescuento.toString();
 		       analisisForm.setPrecioUnitConDescuento(precioUnitarioConDescuento);
 		       total = precioUnitarioConDescuento.multiply(new BigDecimal(Integer.toString(analisisForm.getCantidad())));
+//		       System.out.println(total);
+		       detalle[8] = total.toString();
+		       total = ServiceUtil.redondearNumero(total);
+//		       System.out.println(total);
+		       detalle[9] = total.toString();
 		       analisisForm.setTotalConDescuento(total);
 		       totalAcomulado = totalAcomulado.add(total); //TOTAL ACOMULADO CON DESCUENTO
+		       detalle[10] = totalAcomulado.toString();
 		       //System.out.println("AnalisisServioce - actualizarAcomulados - total - "+analisisForm.getTotalConDescuento() + " "+total);
+		       
+		       analisisForm.setDetalleMonto(detalle);
+//		       System.out.println(analisisForm.getDetalleMonto());
 		   }
 		   atencionForm.setTotalConDescuento(totalAcomulado);
 		   atencionForm.setTotalSinDescuento(subTotalAcomulado);

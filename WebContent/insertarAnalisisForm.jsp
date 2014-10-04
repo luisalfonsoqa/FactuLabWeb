@@ -143,8 +143,77 @@
 			<input type="hidden" id="h_descuento2" name="descuento"/>
 			<input type="hidden" id="accionAtencion" name="accion"/>
 		</form>
+		<!-- 
+		< % Integer numAnalisis = atencion.getlAnalisis().size();
+			if(numAnalisis > 0) {
+		%>
+		<div class="f_accordion">
+			<h3>DETALLE EN SOLES</h3>
+			<table border="0" style="width: 100%; padding: 0; margin: 0;" >
+			<tr><td align="center">
+				<table border="0" style="width: 700px; padding: 0; margin: 0;" id="tableDescuentos">
+					<tr class="ui-widget-header" align="center">
+						<td colspan="3">Precio Unitario</td>
+						<td rowspan="2" width="50">Cant</td>
+						
+						<td width="150" rowspan="2">Precio Venta</td>
+						<td width="150" rowspan="2">Total</td>
+						<!-- td colspan="2">Acomulado</td-- >
+					</tr>
+					<tr class="ui-widget-header" align="center">
+						<td width="100">Valor Ini</td>
+						<td width="100">Desc</td>
+						<td width="150">Valor Fin</td>
+						<!-- td>SubTotal</td>
+						<td>Total </td-- >
+					</tr>
+					< % for (AnalisisForm a : atencion.getlAnalisis()){ %>
+					<tr align="right">
+						<td>< %=a.getDetalleMonto()[0]%></td>
+						<td>< %=a.getDetalleMonto()[5]%></td>
+						
+						<td>
+						< % if(!a.getDetalleMonto()[6].equals(a.getDetalleMonto()[7])) { %>
+							<font color="grey">< %=a.getDetalleMonto()[6]%></font> -  
+						< % } %>
+						< %=a.getDetalleMonto()[7]%>
+						</td>
+						
+						<td align="center">< %=a.getDetalleMonto()[1]%></td>
+						
+						<td>
+						< % if(!a.getDetalleMonto()[2].equals(a.getDetalleMonto()[3])) { %>
+							<font color="grey">< %=a.getDetalleMonto()[2]%></font> -  
+						< % } %>
+						< %=a.getDetalleMonto()[3]%>
+						</td>
+						
+						<td>
+						< % if(!a.getDetalleMonto()[8].equals(a.getDetalleMonto()[9])) { %>
+							<font color="grey">< %=a.getDetalleMonto()[8]%></font> -  
+						< % } %>
+						< %=a.getDetalleMonto()[9]%>
+						</td>
+						<!-- td>< %=a.getDetalleMonto()[4]%></td>
+						<td>< %=a.getDetalleMonto()[10]%></td-- >
+					</tr>
+					< % } %>
+					<tr align="right"  class="ui-widget-header">
+						<td colspan="4"></td>
+						<td><b>S/. < %=atencion.getlAnalisis().get(numAnalisis-1).getDetalleMonto()[4] %></b></td>
+						<td><b>S/. < %=atencion.getlAnalisis().get(numAnalisis-1).getDetalleMonto()[10] %></b></td>
+						<!-- td></td>
+						<td></td-- >
+					</tr>
+				</table>
+			</td></tr>
+			</table>
+		</div>
+		< % } %-->
 	</div>
 </div>
+
+
 
 <div id="divMostrar" align="center">
     <table id="tblCriterio" cellpadding="3" border="0" >

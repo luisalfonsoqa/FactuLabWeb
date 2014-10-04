@@ -80,13 +80,9 @@ public class PacienteDAO {
 		} catch (Exception e) {
 			throw new DAOException(query,e.getMessage(),e); 
 		} finally {
-			try {
-				if (rs != null) rs.close();
-				if (ps != null) ps.close();
-				if (cn != null) cn.close();
-			} catch (SQLException e) {
-				miLog.error(e.getMessage(),e);
-			}
+			if (rs != null) { try { rs.close(); } catch (SQLException e) { } }
+			if (ps != null) { try { ps.close(); } catch (SQLException e) { } }
+			if (cn != null) { try { cn.close(); } catch (SQLException e) { } }
 		}
 	}
 	/**
@@ -152,15 +148,11 @@ public class PacienteDAO {
 		} catch (Exception e) {
 			throw new DAOException(query,e.getMessage(),e); 
 		} finally {
-			try {
-				if (rs != null) rs.close();
-				if (rs0 != null) rs0.close();
-				if (ps != null) ps.close();
-				if (ps0 != null) ps0.close();
-				if (cn != null) cn.close();
-			} catch (SQLException e) {
-				miLog.error(e.getMessage(),e);
-			}
+			if (rs0 != null) { try { rs0.close(); } catch (SQLException e) { } }
+			if (ps0 != null) { try { ps0.close(); } catch (SQLException e) { } }
+			if (rs != null) { try { rs.close(); } catch (SQLException e) { } }
+			if (ps != null) { try { ps.close(); } catch (SQLException e) { } }
+			if (cn != null) { try { cn.close(); } catch (SQLException e) { } }
 		}
 	}
 	/**
@@ -227,20 +219,16 @@ public class PacienteDAO {
 			rs.close();
 			ps.close();
 			cn.close();
-			//if(list.isEmpty()) System.out.println("INFO: No se encontraron pacientes con "+criterio+"["+texto+"]");
+			if(list.isEmpty()) miLog.info("No se encontraron pacientes con "+criterio+"["+texto+"]");
 			return list;
 		} catch (FactulabException e) {
 			throw new FactulabException(e.getMessage(),e);  
 		} catch (Exception e) {
 			throw new DAOException(query,e.getMessage(),e); 
 		} finally {
-			try {
-				if (rs != null) rs.close();
-				if (ps != null) ps.close();
-				if (cn != null) cn.close();
-			} catch (SQLException e) {
-				miLog.error(e.getMessage(),e);
-			}
+			if (rs != null) { try { rs.close(); } catch (SQLException e) { } }
+			if (ps != null) { try { ps.close(); } catch (SQLException e) { } }
+			if (cn != null) { try { cn.close(); } catch (SQLException e) { } }
 		}
 	}
 }

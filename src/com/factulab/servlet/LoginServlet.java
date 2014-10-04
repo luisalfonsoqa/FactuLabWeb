@@ -41,7 +41,30 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		processRequest(request,response);
+		RequestDispatcher rd = null;
+		String txtError = null;
+		Usuario usuarioLogin = (Usuario) request.getSession().getAttribute(ServletConstante.SESSION_USUARIO);
+		try{
+		String txt_device = request.getParameter("device");
+		if(txt_device == null || txt_device.trim().isEmpty())
+			throw new FactulabException("Login incorrecto. Device["+txt_device+"]");
+		
+		usuarioService.obtenerImpresora(usuarioLogin, txt_device);
+		response.sendRedirect("principal.jsp");
+		
+		} catch(DAOException e){
+			miLog.error(e.getMessage()+usuarioLogin.getLogUser(),e);
+			txtError = e.getMessage();
+		} catch(FactulabException e){
+			miLog.error(e.getMessage()+usuarioLogin.getLogUser());
+			txtError = e.getMessage();
+		} finally {
+			if(txtError != null) {
+				request.setAttribute(ServletConstante.REQUEST_ERROR, txtError);
+				rd = request.getRequestDispatcher("error.jsp");
+				rd.forward(request, response);
+			}
+		}
 	}
 
 	/**
@@ -71,19 +94,15 @@ public class LoginServlet extends HttpServlet {
 //			if(!usuarioLogin.isImprimeTickets()) throw new FactulabException("Módulo disponible solo para los usuarios Cajeros.");
 			
 			if(usuarioLogin.getIdTipoUsuario() == DAOConstante.BD_TIPO_USUARIO_CAJA){
-				String txt_device = request.getParameter("device");
-				if(txt_device == null || txt_device.trim().isEmpty())
-					throw new FactulabException("Login incorrecto. Device["+txt_device+"]");
-					
 				/***************************************************
 				*                	INICIAR
 				***************************************************/
 				
-				usuarioService.obtenerImpresora(usuarioLogin, txt_device);
+				//usuarioService.obtenerImpresora(usuarioLogin, txt_device);
 				ConstantesBD constantes = constantesService.cargarConstantesBD();
 				request.getSession().setAttribute(ServletConstante.SESSION_USUARIO, usuarioLogin);
 				request.getSession().setAttribute(ServletConstante.SESSION_CONSTANTE, constantes);
-				response.sendRedirect("principal.jsp");
+				response.sendRedirect("loading.jsp");
 				miLog.info("Cargando Modulo Cajero. Usuario["+usuarioLogin.toString()+"]."+usuarioLogin.getLogUser());
 			} else {
 				request.getSession().removeAttribute(ServletConstante.SESSION_USUARIO);
@@ -94,8 +113,8 @@ public class LoginServlet extends HttpServlet {
 				request.getSession().removeAttribute(ServletConstante.SESSION_VISTA);
 				miLog.info("Cargando Modulo Mantenimiento. Usuario["+usuarioLogin.toString()+"]"+usuarioLogin.getLogUser());
 				
-				//response.sendRedirect("../FactLabWeb/tiles/Login?usuario="+txt_usuario+"&clave="+txt_clave);
-				response.sendRedirect("http://localhost:9081/FactLabWeb/tiles/Login?usuario="+txt_usuario+"&clave="+txt_clave);
+				response.sendRedirect("../FactLabWeb/tiles/Login?usuario="+txt_usuario+"&clave="+txt_clave); //PRD
+//				response.sendRedirect("http://localhost:9081/FactLabWeb/tiles/Login?usuario="+txt_usuario+"&clave="+txt_clave); //DES
 				
 //				response.sendRedirect("../FactLabWeb/IngresarServlet?idApp="+ServletConstante.ID_APP_REP
 //						+"&idSession="+usuarioLogin.getId()+"&usuario="+usuarioLogin.getUsuario()+"&idSede="+usuarioLogin.getIdSede());

@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 
 import com.factulab.dao.bean.Analisis;
 import com.factulab.dao.util.DAOUtil;
+import com.factulab.service.util.ServiceConstante;
 
 public class AnalisisForm implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -22,6 +23,9 @@ public class AnalisisForm implements Serializable {
 	private BigDecimal totalSinDescuento;
 	private BigDecimal totalConDescuento;
 	private Integer idInstitucionDescuento; 
+
+	private String[] detalleMonto;
+	
 	
 	public AnalisisForm(Analisis analisis) {
 		super();
@@ -166,5 +170,21 @@ public class AnalisisForm implements Serializable {
 	public void setIdInstitucionDescuento(Integer idInstitucionDescuento) {
 		this.idInstitucionDescuento = idInstitucionDescuento;
 	}
-	
+	public String[] getDetalleMonto() {
+		return detalleMonto;
+	}
+	public void setDetalleMonto(String[] detalleMonto) {
+		this.detalleMonto = detalleMonto;
+	}
+	public String getDetalleMontoString(){
+		if(detalleMonto != null && detalleMonto.length > 0) {
+			StringBuilder s = new StringBuilder();
+			for (String d: detalleMonto) {
+				s.append(d).append(ServiceConstante.CONCATENADOR);
+			}
+			return s.toString();
+		} else {
+			return "";
+		}
+	}
 }

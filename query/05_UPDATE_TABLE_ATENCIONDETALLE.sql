@@ -1,0 +1,1 @@
+alter table atenciondetalle add detalleMonto nvarchar(250) null

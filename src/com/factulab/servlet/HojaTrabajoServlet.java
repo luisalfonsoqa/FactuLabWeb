@@ -81,6 +81,7 @@ public class HojaTrabajoServlet extends HttpServlet {
 			parametros.put("PACIENTE", hojaTrabajo.getNombrePaciente());
 			parametros.put("CODOMEGA", hojaTrabajo.getCodigoOmega());
 			parametros.put("IDATENCION", hojaTrabajo.getIdAtencion());
+			parametros.put("EDAD", hojaTrabajo.getEdad());
 
 	        // set header as pdf
 	        response.setContentType("application/pdf");

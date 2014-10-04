@@ -112,7 +112,7 @@ public class AjaxPacienteServlet extends HttpServlet {
 			     ***************************************************/	
 				lPaciente = pacienteService.obtenerPorCriterio(criterio, texto);
 				mapper.writeValue(response.getOutputStream(), lPaciente);
-				miLog.info("Buscar Paciente [Fin] por "+criterio+"["+texto+"]"+usuarioLogin.getLogUser());
+				miLog.info("Buscar Paciente [Fin] por "+criterio+"["+texto+"]"+usuarioLogin.getLogUser() + " Registros: "+ lPaciente.size());
 			} else if(accion.equals("nuevo")){
 				//1. Leer parametros 
 				String txt_idInstitucion = request.getParameter("idInstitucion");

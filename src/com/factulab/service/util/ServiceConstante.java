@@ -28,6 +28,8 @@ public class ServiceConstante {
 	public static int TURNO_TARDE_FIN = 24;
 	public static String TURNO_TODOS = "0";
 	
+	public static String CONCATENADOR = "|";
+	
 	/**
 	 * AMBIENTE PRODUCCION
 	 */

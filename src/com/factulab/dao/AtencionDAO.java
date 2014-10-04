@@ -20,6 +20,7 @@ import com.factulab.dao.form.HojaTrabajoForm;
 import com.factulab.dao.form.ReporteAnalisisDetalle;
 import com.factulab.dao.util.ConectaDB;
 import com.factulab.dao.util.DAOConstante;
+import com.factulab.dao.util.DAOUtil;
 
 public class AtencionDAO {
 	Logger miLog = Logger.getLogger(AtencionDAO.class);
@@ -55,13 +56,9 @@ public class AtencionDAO {
 		} catch (Exception e) {
 			throw new DAOException(query,e.getMessage(),e);  
 		} finally {
-			try {
-				if (rs != null) rs.close();
-				if (ps != null) ps.close();
-				if (cn != null) cn.close();
-			} catch (SQLException e) {
-				miLog.error(e.getMessage(),e);
-			}
+			if (rs != null) { try { rs.close(); } catch (SQLException e) { } }
+			if (ps != null) { try { ps.close(); } catch (SQLException e) { } }
+			if (cn != null) { try { cn.close(); } catch (SQLException e) { } }
 		}
 	}
 	/**
@@ -84,13 +81,9 @@ public class AtencionDAO {
 		} catch (Exception e) {
 			throw new DAOException(query,e.getMessage(),e);  
 		} finally {
-			try {
-				if (rs != null) rs.close();
-				if (ps != null) ps.close();
-				if (cn != null) cn.close();
-			} catch (SQLException e) {
-				miLog.error(e.getMessage(),e);
-			}
+			if (rs != null) { try { rs.close(); } catch (SQLException e) { } }
+			if (ps != null) { try { ps.close(); } catch (SQLException e) { } }
+			if (cn != null) { try { cn.close(); } catch (SQLException e) { } }
 		}
 	}
 	/**
@@ -107,7 +100,7 @@ public class AtencionDAO {
 		String query = null;
 		try {
 			cn = new ConectaDB().getConexion();
-			query = "select a.codOmega, a.idAtencion, (p.apepat + ' '+ p.apemat + ' '+p.nombre) 'nombrePaciente' from atencion a, paciente p where a.paciente = p.idPaciente and a.idAtencion = ?";
+			query = "select a.codOmega, a.idAtencion, (p.apepat + ' '+ p.apemat + ' '+p.nombre) 'nombrePaciente', p.fecnac from atencion a, paciente p where a.paciente = p.idPaciente and a.idAtencion = ?";
 			ps = cn.prepareStatement(query);
 			ps.setLong(1, id);
 			rs = ps.executeQuery();
@@ -116,19 +109,17 @@ public class AtencionDAO {
 				bean.setCodigoOmega(rs.getString("codOmega"));
 				bean.setNombrePaciente(rs.getString("nombrePaciente"));
 				bean.setIdAtencion(rs.getInt("idAtencion"));
+				Date fecnac = rs.getDate("fecnac");
+				bean.setEdad(DAOUtil.getEdad(fecnac));
 			}
 			ps.close();
 			return bean;
 		} catch (Exception e) {
 			throw new DAOException(query,e.getMessage(),e); 
 		} finally {
-			try {
-				if (rs != null) rs.close();
-				if (ps != null) ps.close();
-				if (cn != null) cn.close();
-			} catch (SQLException e) {
-				miLog.error(e.getMessage(),e);
-			}
+			if (rs != null) { try { rs.close(); } catch (SQLException e) { } }
+			if (ps != null) { try { ps.close(); } catch (SQLException e) { } }
+			if (cn != null) { try { cn.close(); } catch (SQLException e) { } }
 		}
 	}
 	/**
@@ -152,12 +143,8 @@ public class AtencionDAO {
 		} catch (Exception e) {
 			throw new DAOException(query,e.getMessage(),e); 
 		} finally {
-			try {
-				if (ps != null) ps.close();
-				if (cn != null) cn.close();
-			} catch (SQLException e) {
-				miLog.error(e.getMessage(),e);
-			}
+			if (ps != null) { try { ps.close(); } catch (SQLException e) { } }
+			if (cn != null) { try { cn.close(); } catch (SQLException e) { } }
 		}
 	}
 	/**
@@ -218,13 +205,9 @@ public class AtencionDAO {
 		} catch (Exception e) {
 			throw new DAOException(query,e.getMessage(),e); 
 		} finally {
-			try {
-				if (rs != null) rs.close();
-				if (ps != null) ps.close();
-				if (cn != null) cn.close();
-			} catch (SQLException e) {
-				miLog.error(e.getMessage(),e);
-			}
+			if (rs != null) { try { rs.close(); } catch (SQLException e) { } }
+			if (ps != null) { try { ps.close(); } catch (SQLException e) { } }
+			if (cn != null) { try { cn.close(); } catch (SQLException e) { } }
 		}
 	}
 	/**
@@ -272,13 +255,9 @@ public class AtencionDAO {
 		} catch (Exception e) {
 			throw new DAOException(query,e.getMessage(),e); 
 		} finally {
-			try {
-				if (rs != null) rs.close();
-				if (ps != null) ps.close();
-				if (cn != null) cn.close();
-			} catch (SQLException e) {
-				miLog.error(e.getMessage(),e);
-			}
+			if (rs != null) { try { rs.close(); } catch (SQLException e) { } }
+			if (ps != null) { try { ps.close(); } catch (SQLException e) { } }
+			if (cn != null) { try { cn.close(); } catch (SQLException e) { } }
 		}
 	}
 	/**
@@ -342,13 +321,9 @@ public class AtencionDAO {
 		} catch (Exception e) {
 			throw new DAOException(query,e.getMessage(),e); 
 		} finally {
-			try {
-				if (rs != null) rs.close();
-				if (ps != null) ps.close();
-				if (cn != null) cn.close();
-			} catch (SQLException e) {
-				miLog.error(e.getMessage(),e);
-			}
+			if (rs != null) { try { rs.close(); } catch (SQLException e) { } }
+			if (ps != null) { try { ps.close(); } catch (SQLException e) { } }
+			if (cn != null) { try { cn.close(); } catch (SQLException e) { } }
 		}
 	}
 }

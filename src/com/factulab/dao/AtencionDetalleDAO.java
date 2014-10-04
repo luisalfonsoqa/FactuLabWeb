@@ -28,7 +28,7 @@ public class AtencionDetalleDAO {
 		try {
 			cn = new ConectaDB().getConexion();
 			query = "EXEC FacturaLabSQL.dbo.InsertarAtencionDetalle @idAtencion = ?, @idAnalisis = ?,"
-					+ " @cantidad = ?, @totalConDescu = ?, @precioUniSinDesc = ?, @precioUni = ?";
+					+ " @cantidad = ?, @totalConDescu = ?, @precioUniSinDesc = ?, @precioUni = ?, @detalleMonto = ? ";
 			ps = cn.prepareStatement(query);
 			ps.setInt(1, detalle.getIdAtencion());
 			ps.setInt(2, detalle.getIdAnalisis());
@@ -36,18 +36,15 @@ public class AtencionDetalleDAO {
 			ps.setBigDecimal(4, detalle.getMonto());
 			ps.setBigDecimal(5, detalle.getPrecio());
 			ps.setBigDecimal(6, detalle.getPrecioUnitario());
+			ps.setString(7, detalle.getDetalleMonto());
 			ps.executeUpdate();
 			ps.close();
 			cn.close();
 		} catch (Exception e) {
 			throw new DAOException(query,e.getMessage(),e);  
 		} finally {
-			try {
-				if (ps != null) ps.close();
-				if (cn != null) cn.close();
-			} catch (SQLException e) {
-				miLog.error(e.getMessage(),e);
-			}
+			if (ps != null) { try { ps.close(); } catch (SQLException e) { } }
+			if (cn != null) { try { cn.close(); } catch (SQLException e) { } }
 		}
 	}
 	/**
@@ -83,13 +80,9 @@ public class AtencionDetalleDAO {
 		} catch (Exception e) {
 			throw new DAOException(query,e.getMessage(),e); 
 		} finally {
-			try {
-				if (rs != null) rs.close();
-				if (ps != null) ps.close();
-				if (cn != null) cn.close();
-			} catch (SQLException e) {
-				miLog.error(e.getMessage(),e);
-			}
+			if (rs != null) { try { rs.close(); } catch (SQLException e) { } }
+			if (ps != null) { try { ps.close(); } catch (SQLException e) { } }
+			if (cn != null) { try { cn.close(); } catch (SQLException e) { } }
 		}
 	}
 }
