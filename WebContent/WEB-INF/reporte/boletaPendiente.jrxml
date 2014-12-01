@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="boletaPendiente" pageWidth="210" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="195" leftMargin="5" rightMargin="10" topMargin="10" bottomMargin="5" whenResourceMissingType="Empty" isIgnorePagination="true" uuid="44ce218f-9e7d-4448-afed-302299121825">
-	<property name="ireport.zoom" value="2.853116706110016"/>
+	<property name="ireport.zoom" value="2.5937424601000147"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="390"/>
+	<property name="ireport.y" value="38"/>
 	<parameter name="TOTAL" class="java.lang.Double"/>
 	<parameter name="NOMBRE" class="java.lang.String"/>
 	<parameter name="DIRECCION" class="java.lang.String"/>
@@ -22,11 +22,12 @@
 	<field name="nombreAnalisis" class="java.lang.String"/>
 	<field name="monto" class="java.math.BigDecimal"/>
 	<field name="cantidad" class="java.lang.Integer"/>
+	<field name="tipo" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="116" splitType="Stretch">
+		<band height="99" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="170" height="23" uuid="caf393be-8729-4cb0-a553-453a76fa0d94"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
@@ -52,7 +53,7 @@
 				<textFieldExpression><![CDATA[$P{SERIE}+"-"+$P{NUMERO}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="56" width="16" height="12" uuid="6278cf96-c41c-49a6-8dd0-dc15edecf93d"/>
+				<reportElement x="0" y="56" width="17" height="12" uuid="6278cf96-c41c-49a6-8dd0-dc15edecf93d"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font fontName="Times New Roman" size="9" isBold="false"/>
 					<paragraph lineSpacing="Single"/>
@@ -68,15 +69,15 @@
 				<text><![CDATA[ Av Guardia Civil C-8 Urb. Miraflores-Castilla-Piura-Piura Telf: (073) 345594]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="16" y="56" width="56" height="12" uuid="6278cf96-c41c-49a6-8dd0-dc15edecf93d"/>
+				<reportElement x="17" y="56" width="56" height="12" uuid="6278cf96-c41c-49a6-8dd0-dc15edecf93d"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font fontName="Times New Roman" size="9" isBold="false"/>
 					<paragraph lineSpacing="Single" leftIndent="2"/>
 				</textElement>
 				<text><![CDATA[20484079197]]></text>
 			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="16" y="87" width="154" height="23" uuid="8b70cfb0-a293-44b2-a042-63742bae1c5a">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="17" y="87" width="153" height="12" uuid="8b70cfb0-a293-44b2-a042-63742bae1c5a">
 					<printWhenExpression><![CDATA[!$P{NOMBRE}.equals($P{PACIENTE})]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Top">
@@ -86,7 +87,7 @@
 				<textFieldExpression><![CDATA[$P{NOMBRE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="87" width="16" height="12" uuid="5880dd8d-958b-408e-ba3b-1f26a2994228"/>
+				<reportElement x="0" y="87" width="17" height="12" uuid="5880dd8d-958b-408e-ba3b-1f26a2994228"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font fontName="Times New Roman" size="9" isBold="false"/>
 					<paragraph lineSpacing="Single"/>
@@ -94,20 +95,20 @@
 				<text><![CDATA[Pac]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="16" y="75" width="89" height="12" uuid="d7eef630-f151-4edd-8c2c-94a210bea380"/>
-				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font fontName="Times New Roman" size="9" isBold="false"/>
-					<paragraph lineSpacing="Single" leftIndent="2"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{FECHA}+"hrs"]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="0" y="75" width="16" height="12" uuid="5880dd8d-958b-408e-ba3b-1f26a2994228"/>
+				<reportElement x="13" y="75" width="89" height="12" uuid="d7eef630-f151-4edd-8c2c-94a210bea380"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font fontName="Times New Roman" size="9" isBold="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<text><![CDATA[Fec]]></text>
+				<textFieldExpression><![CDATA[$P{FECHA}+"hrs"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="75" width="13" height="12" uuid="5880dd8d-958b-408e-ba3b-1f26a2994228"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Fe]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -150,7 +151,7 @@
 	</columnHeader>
 	<detail>
 		<band height="12" splitType="Stretch">
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="20" y="0" width="120" height="12" uuid="567e5e43-c58a-48d9-9668-1e0968f81363"/>
 				<textElement textAlignment="Left">
 					<font fontName="Times New Roman" size="9"/>
@@ -167,7 +168,9 @@
 				<textFieldExpression><![CDATA[$F{monto}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="0" width="20" height="12" uuid="775f0b97-92ef-4b13-b539-c28425cc0591"/>
+				<reportElement x="0" y="0" width="20" height="12" uuid="775f0b97-92ef-4b13-b539-c28425cc0591">
+					<printWhenExpression><![CDATA[$F{tipo}==1]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Left">
 					<font fontName="Times New Roman" size="9"/>
 					<paragraph leftIndent="5"/>

@@ -12,6 +12,9 @@ public class AtencionDetalle implements Serializable {
 	private BigDecimal precioUnitario;
 	private Integer idAtencion;
 	private String detalleMonto;
+	private BigDecimal descuento;
+//	private int tipo;
+	
 	public Integer getIdAnalisis() {
 		return idAnalisis;
 	}
@@ -53,7 +56,7 @@ public class AtencionDetalle implements Serializable {
 		return "AtencionDetalle [idAnalisis=" + idAnalisis + ", cantidad="
 				+ cantidad + ", monto=" + monto + ", precio=" + precio
 				+ ", precioUnitario=" + precioUnitario + ", idAtencion="
-				+ idAtencion + "]";
+				+ idAtencion + ", descuento=" + descuento + "]";
 	}
 	public String getDetalleMonto() {
 		return detalleMonto;
@@ -61,4 +64,17 @@ public class AtencionDetalle implements Serializable {
 	public void setDetalleMonto(String detalleMonto) {
 		this.detalleMonto = detalleMonto;
 	}
+	public BigDecimal getDescuento() {
+		return descuento;
+	}
+	public void setDescuento(BigDecimal descuento) {
+		this.descuento = descuento;
+	}
+//	public int getTipo() {
+//		return tipo;
+//	}
+//	public void setTipo(int tipo) {
+//		this.tipo = tipo;
+//	}
+//	
 }

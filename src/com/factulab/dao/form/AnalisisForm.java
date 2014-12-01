@@ -19,13 +19,15 @@ public class AnalisisForm implements Serializable {
 	private BigDecimal precioUnitSinTarifa;
 	private BigDecimal precioUnitConTarifa;
 	private BigDecimal precioUnitConDescuento;
+//	private BigDecimal descuentoUnit; //added
 	private Integer cantidad;
 	private BigDecimal totalSinDescuento;
 	private BigDecimal totalConDescuento;
+//	private BigDecimal totalDescuento; //added
 	private Integer idInstitucionDescuento; 
 
 	private String[] detalleMonto;
-	
+	private BigDecimal descuento;
 	
 	public AnalisisForm(Analisis analisis) {
 		super();
@@ -112,6 +114,18 @@ public class AnalisisForm implements Serializable {
 	public void setPrecioUnitConDescuento(BigDecimal precioUnitConDescuento) {
 		this.precioUnitConDescuento = precioUnitConDescuento;
 	}
+//	public BigDecimal getDescuentoUnit() {
+//		return descuentoUnit;
+//	}
+//	public void setDescuentoUnit(BigDecimal descuentoUnit) {
+//		this.descuentoUnit = descuentoUnit;
+//	}
+//	public BigDecimal getTotalDescuento() {
+//		return totalDescuento;
+//	}
+//	public void setTotalDescuento(BigDecimal totalDescuento) {
+//		this.totalDescuento = totalDescuento;
+//	}
 	@Override
 	public String toString() {
 		return "AnalisisForm [nombre=" + nombre + ", seccion=" + seccion
@@ -122,7 +136,9 @@ public class AnalisisForm implements Serializable {
 				+ precioUnitConTarifa + ", cantidad=" + cantidad
 				+ ", totalSinDescuento=" + totalSinDescuento
 				+ ", totalConDescuento=" + totalConDescuento
-				+ ", idInstitucionDescuento=" + idInstitucionDescuento + "]";
+				+ ", idInstitucionDescuento=" + idInstitucionDescuento 
+				+ ", descuento=" + descuento
+				+ "]";
 	}
 	@Override
 	public int hashCode() {
@@ -186,5 +202,15 @@ public class AnalisisForm implements Serializable {
 		} else {
 			return "";
 		}
+	}
+	public BigDecimal getDescuento() {
+		return descuento;
+	}
+	public void setDescuento(BigDecimal descuento) {
+		this.descuento = descuento;
+	}
+	
+	public String getDescuentoString(){
+		return DAOUtil.formatearBigDecimal(this.descuento);
 	}
 }

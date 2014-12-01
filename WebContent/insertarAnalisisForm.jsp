@@ -70,12 +70,11 @@
 			<table border="0" style="width: 100%; padding: 0; margin: 0;" id="tableAgregarAnalisis">
 				<tr>
 					<td width="150px" height="35"><label>&nbsp;Código de Análisis:</label></td>
-					<td width="80px" align="center"><input type="text" name="idAnalisis" size="3" id="idAnalisis" onkeypress="return isNumberKey(event);"></td>
+					<td width="80px" align="center"><input type="text" name="idAnalisis" size="3" id="idAnalisis" class="numero" onkeypress="return isNumberKey(event);"></td>
 					<td>
 						<img src="images/accept.png" alt="Aceptar Medico" id="btnAgregarAnalisis" width="25.5" height="25.5"/>&nbsp;&nbsp;&nbsp;&nbsp;
 						<img src="images/magnifier.png" alt="Buscar Analisis" id="btnCargarDialogoAnalisis" width="26" height="26"/>&nbsp;&nbsp;&nbsp;&nbsp;
 						<img src="images/cancelar.png" alt="Borrar Todo" id="btnLimpiarAnalisis" width="25.5" height="25.5"/>&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="hidden" id="h_descuento" name="descuento"/>
 						<input type="hidden" name="accion" id="accionAnalisis"/>						
 					</td>
 					<td align="right"></td>
@@ -83,55 +82,52 @@
 			</table>
 		</div>
 		</form>
-		<table border="0"  style="width: 100%; padding: 0; margin: 0;" id="tableListadoAnalisis" class="ui-widget ui-widget-content">	
-			<thead>
-	    		<tr class="ui-widget-header">
-					<td width="30"><label>Cód</label></td>
-					<td width="220"><label>Nombre</label></td>
-					<td width="150"><label>Sección</label></td>
-					<td width="30"><label>Mon</label></td>
-					<td width="70"><label>P. Uni</label></td>
-					<td width="70"><label>P. Tar</label></td>
-					<td width="40"><label>Cant.</label></td>
-					<td width="70"><label>V. Venta</label></td>
-					<td width="40"><label>Desc.</label></td>
-					<td width="70"><label>P. Final</label></td>
-					<td width="60"><label>Acción</label></td>
-				</tr>
-			</thead>
-			<tbody style="font-size: 11px;">
-				<%
+		<form id="frmAnalisisDetalle" action="AnalisisServlet" style="padding: 0; margin: 0;">
+			<input type="hidden" name="accion" id="accionAnalisisDetalle" value="actualizarDescuento"/>
+			<table border="0"  style="width: 100%; padding: 0; margin: 0;" class="ui-widget ui-widget-content">	
+				<thead>
+		    		<tr class="ui-widget-header">
+						<td width="30" align="center"><label>Cód</label></td>
+						<td width="310"><label>Nombre</label></td>
+						<td width="140"><label>Sección</label></td>
+						<td width="60" align="center"><label>P. Uni</label></td>
+						<td width="60" align="center"><label>P. Tar</label></td>
+						<td width="60" align="center"><label>Desc (%)</label></td>
+						<td width="50" align="center"><label>Cant.</label></td>
+						<td width="60" align="center"><label>V. Venta</label></td>
+						<td width="50" align="center"><label>P. Final</label></td>
+						<td width="80" align="center"><label>Acción</label></td>
+					</tr>
+				</thead>
+				<tbody style="font-size: 11px;">
+					<%
 					for (AnalisisForm a : atencion.getlAnalisis()){
-									out.println("<tr><td>"+a.getIdAnalisis()+"</td><td>"+a.getNombre());
-									if(a.getIdInstitucionDescuento() != null)
-										out.println("<font color='red'>(*)</font>");
-									out.println("</td>");
-									out.println("<td>"+a.getNombreSeccion() +"</td><td>S/.</td>");
-									out.println("<td>"+a.getPrecioUnitSinTarifaString()+"</td><td>"+a.getPrecioUnitConTarifaString()+"</td>");
-									out.println("<td>"+a.getCantidad()+"</td><td>"+a.getTotalSinDescuentoString()+"</td>");
-									out.println("<td>"+atencion.getPorcentajeDescuentoString()+"</td><td>"+a.getTotalConDescuentoString()+"</td>");
-									out.println("<td><input type='button' class='button' onclick='fnEliminarAnalisis("+a.getIdAnalisis()+");' value='Eliminar'/></td></tr>");
-								}
-				%>
-			</tbody>
-		</table>
-		
-		<br/>
+						out.println("<tr><td align='center'>"+a.getIdAnalisis()+"</td><td>"+a.getNombre());
+						if(a.getIdInstitucionDescuento() != null) out.println("<font color='red'>(*)</font>");
+						out.println("</td>");
+						out.println("<td>"+a.getNombreSeccion() +"</td>");
+						out.println("<td align='right'>"+a.getPrecioUnitSinTarifaString()+"</td><td align='right'>"+a.getPrecioUnitConTarifaString()+"</td>");
+						out.println("<td align='right'><input type='text' size='3' name='descuento' onchange='displayBtnAsignarDescuento();' onfocus='return focusIfZero(this);' onblur='return blurIfZero(this);' class='numero' value='"+a.getDescuento()+"'/></td>");
+						out.println("<td align='center'>"+a.getCantidad()+"</td>");
+						out.println("<td align='right'>"+a.getTotalSinDescuentoString()+"</td>");
+						out.println("<td align='right'>"+a.getTotalConDescuentoString()+"</td>");
+						out.println("<td align='center'><input type='button' class='button' onclick='fnEliminarAnalisis("+a.getIdAnalisis()+");' value='Eliminar'/></td></tr>");
+					}
+					%>
+				</tbody>
+			</table>
+		</form>
+		<br/>	
 		<table border="0" style="width: 100%; padding: 0; margin: 0; height: 20px; vertical-align: middle;" id="tableAgregarAnalisis" class="ui-widget-header">
 			<tr>
-				<td width="100px"></td>
-				<td width="190px"><label>PRECIO VENTA (S/.):</label></td>
-				<td width="80px" align="left"><input type="text" size="8" id="precioVenta" disabled="disabled" value="<%=atencion.getTotalSinDescuentoString()%>"/></td>
-				<td width="150px" align="right"><label>DESC (%):</label></td>
-				<td width="150px" align="left" style="display: inline-block;"> 
-					<input type="text" size="3" id="descuento" name="descuento" value="<%=atencion.getPorcentajeDescuento()%>" onkeypress="return isNumberKey(event);" style="display: inline;"/>  
-					<!-- input type="button" class="button" value="B" id="btnAsignarDescuento"/-->
-					<img src="images/accept.png" alt="Asignar Descuento" id="btnAsignarDescuento" width="25.5" height="25.5" style="display: inline;"/>
-				</td>
-				<td width="150px" align="right"><label>TOTAL: (S/.):</label></td>
-				<td width="100px" align="center"><input type="text" size="8" id="total" disabled="disabled"  value="<%=atencion.getTotalConDescuentoString()%>"/></td>
-				<td align="right">
-					<input type="button" class="button" value="Procesar Atencion" id="btnResumenAtencion" />
+				<td align="right"></td>
+				<td width="120px" align="right"><label>PRECIO VENTA (S/.):</label></td>
+				<td width="80px" align="left"><input type="text" size="7" id="precioVenta" disabled="disabled" class="numero" value="<%=atencion.getTotalSinDescuentoString()%>"/></td>
+				<td width="120px" align="right"><label>TOTAL (S/.):</label></td>
+				<td width="100px" align="center"><input type="text" size="7" id="total" disabled="disabled" class="numero" value="<%=atencion.getTotalConDescuentoString()%>"/></td>
+				<td width="200px" align="right">
+					<input style="width: 150px; display: inline-block;" type="button" class="button" value="Asignar Descuentos" id="btnAsignarDescuento"/>
+					<input style="width: 150px; display: inline-block;" type="button" class="button" value="Procesar Atencion" id="btnResumenAtencion"/>
 				</td>
 			</tr>
 		</table>
@@ -140,7 +136,6 @@
 		%></div>
 		<input type="button" value="Eliminar Analisis" id="btnEliminarAnalisis" style="visibility: hidden;" />
 		<form id="frmAtencion" action="ProcesarAtencionServlet">
-			<input type="hidden" id="h_descuento2" name="descuento"/>
 			<input type="hidden" id="accionAtencion" name="accion"/>
 		</form>
 		<!-- 
@@ -240,6 +235,18 @@
 		$('#idAnalisis').val(id);
 		$('#btnEliminarAnalisis').click();
 	}
+	function displayBtnAsignarDescuento(){
+		$('#btnAsignarDescuento').show();
+		$('#btnResumenAtencion').hide();
+	}	
+	function focusIfZero(obj){
+		if($(obj).val() === '0') $(obj).val('');
+	}
+	function blurIfZero(obj){
+		if($(obj).val() === '') $(obj).val('0');
+	}
+	
+	
 	$(function() {		
 		var btnAgregarAnalisis = $('#btnAgregarAnalisis');
 		var btnEliminarAnalisis = $('#btnEliminarAnalisis');
@@ -248,12 +255,9 @@
 		var btnResumenAtencion = $('#btnResumenAtencion');
 		var btnCancelarAtencion = $('#btnCancelarAtencion');
 		
-		var h_descuento = $('#h_descuento');
-		var h_descuento2 = $('#h_descuento2');
 		var accionAnalisis = $('#accionAnalisis');
 		var accionAtencion = $('#accionAtencion');
 		var precioVenta = $('#precioVenta');
-		var descuento = $('#descuento');
 
 		var btnCargarDialogoAnalisis = $('#btnCargarDialogoAnalisis');
 		var divMostrar = $('#divMostrar');
@@ -266,7 +270,8 @@
 		var page_index; //agregado
 		var items_per_page; //agregado
 		var max_elem; //agregado
-
+		
+		btnAsignarDescuento.hide();
 		
 		btnCargarDialogoAnalisis.click(function(){
         	var jsonCriterio=[{valor:'nombre',texto:'Nombre'}];
@@ -397,15 +402,12 @@
 				printError("Precio de Venta no valido.");
 				return false;
 			}	
-			h_descuento2.val(descuento.val());
 			accionAtencion.val('resumen');
 			$("#frmAtencion").submit();
 		});
 		
 		btnAsignarDescuento.click(function(){
-			 h_descuento.val(descuento.val());
-			 accionAnalisis.val('actualizarDescuento');
-			 $("#frmAnalisis").submit();
+			 $("#frmAnalisisDetalle").submit();
 		});
 		
 		btnAgregarAnalisis.click(function(){
@@ -413,7 +415,6 @@
 				printError("Ingrese Analisis.");
 				return;
 			}
-			h_descuento.val(descuento.val());
 			accionAnalisis.val('agregar');
 			$("#frmAnalisis").submit();
 		});

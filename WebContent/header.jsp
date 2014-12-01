@@ -24,12 +24,17 @@ form{
 .header_titulo {
 	margin-top: 2em;
 }
+.numero { 
+	text-align:right; 
+}
 label.title {
 	font-weight: bold;
 	padding-left: 0.5em;
 }
 label, input { display:block; }
 input.text { width:95%; padding: .4em; }
+
+
 </style>
 <!-- link rel="stylesheet" href="css/css3menu1/style.css" type="text/css" /-->
 </head>

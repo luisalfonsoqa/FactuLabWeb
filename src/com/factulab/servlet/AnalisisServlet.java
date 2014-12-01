@@ -148,11 +148,11 @@ public class AnalisisServlet extends HttpServlet {
 				atencion.setTotalSinDescuento(BigDecimal.ZERO);
 				jsp = "insertarAnalisisForm.jsp";
 				miLog.info(" Nueva Atencion. Paso2.5 - Dell All "+ usuarioLogin.getLogUser());
-			} else if(accion.equals("actualizarDescuento")){
+/*			} else if(accion.equals("actualizarDescuento")){
 				/*************************************************************
 			     *              VALIDAR [ACTUALIZAR DESCUENTO]
 			     *************************************************************/	
-				BigDecimal descuento = BigDecimal.ZERO;
+/*				BigDecimal descuento = BigDecimal.ZERO;
 				String txt_descuento = request.getParameter("descuento");
 				try{ descuento = new BigDecimal(txt_descuento);  
 				} catch(Exception ex){ descuento = BigDecimal.ZERO; }
@@ -160,10 +160,32 @@ public class AnalisisServlet extends HttpServlet {
 				/*************************************************************
 			     *              INICIAR [ACTUALIZAR DESCUENTO]
 			     *************************************************************/	
-				atencion.setPorcentajeDescuento(descuento);
+/*				atencion.setPorcentajeDescuento(descuento);
 				analisisService.actualizarDescuentoAtencion(atencion);
 				jsp = "insertarAnalisisForm.jsp";
 				miLog.info(" Nueva Atencion. Paso2.5 - Update Descuento["+descuento+"] " + usuarioLogin.getLogUser());
+*/			
+			} else if(accion.equals("actualizarDescuento")){
+				/*************************************************************
+			     *              VALIDAR [ACTUALIZAR DESCUENTO]
+			     *************************************************************/	
+				String[] lDescuento = (String[]) request.getParameterValues("descuento");
+				if(Integer.compare(lDescuento.length, atencion.getlAnalisis().size()) != 0){
+					throw new FactulabException("El número de descuentos["+lDescuento.length+"] no es igual al número de analisis["+atencion.getlAnalisis().size()+"].");
+				}
+				/*************************************************************
+			     *              INICIAR [ACTUALIZAR DESCUENTO]
+			     *************************************************************/	
+				BigDecimal descuento = BigDecimal.ZERO;
+				for(int i=0; i<atencion.getlAnalisis().size(); i++){
+					try{  descuento = new BigDecimal(lDescuento[i]);
+					}catch(Exception e){ throw new FactulabException("Descuento invalido["+descuento+"]."); }
+					atencion.getlAnalisis().get(i).setDescuento(descuento);
+				}
+				//atencion.setPorcentajeDescuento(descuento);
+				analisisService.actualizarDescuentoAtencion(atencion);
+				jsp = "insertarAnalisisForm.jsp";
+				miLog.info(" Nueva Atencion. Paso2.5 - Update Descuento. " + usuarioLogin.getLogUser());
 			} else {
 				throw new FactulabException("Accion no valida ["+accion+"]");
 			}

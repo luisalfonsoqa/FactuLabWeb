@@ -28,7 +28,7 @@ public class AtencionDetalleDAO {
 		try {
 			cn = new ConectaDB().getConexion();
 			query = "EXEC FacturaLabSQL.dbo.InsertarAtencionDetalle @idAtencion = ?, @idAnalisis = ?,"
-					+ " @cantidad = ?, @totalConDescu = ?, @precioUniSinDesc = ?, @precioUni = ?, @detalleMonto = ? ";
+					+ " @cantidad = ?, @totalConDescu = ?, @precioUniSinDesc = ?, @precioUni = ?, @detalleMonto = ?, @descuento = ? ";
 			ps = cn.prepareStatement(query);
 			ps.setInt(1, detalle.getIdAtencion());
 			ps.setInt(2, detalle.getIdAnalisis());
@@ -37,6 +37,7 @@ public class AtencionDetalleDAO {
 			ps.setBigDecimal(5, detalle.getPrecio());
 			ps.setBigDecimal(6, detalle.getPrecioUnitario());
 			ps.setString(7, detalle.getDetalleMonto());
+			ps.setBigDecimal(8, detalle.getDescuento());
 			ps.executeUpdate();
 			ps.close();
 			cn.close();

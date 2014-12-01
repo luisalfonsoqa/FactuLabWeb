@@ -71,7 +71,7 @@
 		</div>
 		<div class="f_accordion">
 			<h3>ATENCIONES PENDIENTES</h3>
-			<table style="width: 100%;"><tr><td align="right"><input id="btnSelecAll" type="button" class="button" value="Seleccionar Todos"/>&nbsp;&nbsp;&nbsp;&nbsp;<input id="btnDetalle" type="button" class="button" value="Ver Detalles"/></td></tr></table>
+			<table style="width: 100%;"><tr><td align="right"><input id="btnSelecAll" type="button" class="button" value="Seleccionar Todos"/>&nbsp;&nbsp;&nbsp;&nbsp;<input id="btnDetalle" type="button" class="button" value="Facturar Pendientes"/></td></tr></table>
 		</div>
 		<form id="frmDetallePendiente" action="ResumenAtencionPendienteServlet" style="width: 100%; padding: 0; margin: 0;">
 				<table border="0"  style="width: 100%; padding: 0; margin: 0;" id="tableListadoAnalisis" class="ui-widget ui-widget-content">

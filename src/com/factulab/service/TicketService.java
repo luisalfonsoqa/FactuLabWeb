@@ -22,6 +22,7 @@ import com.factulab.dao.form.TicketPendienteDetalleForm;
 import com.factulab.dao.form.TicketPendienteForm;
 import com.factulab.dao.util.DAOConstante;
 import com.factulab.service.exception.ServiceException;
+import com.factulab.service.util.ServiceConstante;
 import com.factulab.service.util.ServiceUtil;
 
 public class TicketService {
@@ -75,6 +76,8 @@ public class TicketService {
 		     *                TICKET DETALLE 
 		     ***************************************************/
 			 TicketDetalle detalle = null;
+			 BigDecimal totalDescuento = BigDecimal.ZERO;
+			 
 			 int item = 0;
 		     for (AnalisisForm a : atencionForm.getlAnalisis()) {
 		    	detalle = new TicketDetalle();
@@ -83,12 +86,26 @@ public class TicketService {
 		        detalle.setDescripcion(a.getNombre());
 		        detalle.setIdAtencion(atencionForm.getIdAtencion());
 		        detalle.setIdTicket(ticket.getIdTicket());
-		        detalle.setImporte(a.getTotalConDescuento());
+		        detalle.setImporte(a.getTotalSinDescuento());
+//		        detalle.setImporte(a.getTotalConDescuento());
 		        detalle.setNumItem(item);
 		        detalle.setNumSerie(ticket.getNumSerie());
 		        detalle.setNumTicket(ticket.getNumTicket());
+		        detalle.setTipo(ServiceConstante.TICKETDETALLE_ANALISIS);
 	        	ticketDetalleDAO.create(detalle);
 	        	item++;
+	        	/**
+	        	 * Insertamos el descuento en el detalle del ticket
+	        	 */
+		    	if(a.getDescuento().compareTo(BigDecimal.ZERO) != 0){
+		    		totalDescuento = a.getTotalConDescuento().subtract(a.getTotalSinDescuento());
+		    		detalle.setDescripcion(ServiceConstante.DESCRIP_DESCUENTO_TICKET + " ("+a.getDescuentoString() +"%)");
+		    		detalle.setImporte(totalDescuento);
+		    		detalle.setTipo(ServiceConstante.TICKETDETALLE_DESCUENTO);
+			        detalle.setNumItem(item);
+		        	ticketDetalleDAO.create(detalle);
+		        	item++;
+		    	}
 			}
 		     miLog.info("Nuevo Ticket["+ticket.toString()+"] creado con ["+atencionForm.getlAnalisis().size()+"] TicketDetalles."+usuarioLogin.getLogUser());
 		} catch(DAOException ex){
@@ -97,7 +114,6 @@ public class TicketService {
 			throw new ServiceException(ex); 
 		}
 	} 
-	
 	public void crearTicketPendiente(AtencionPendienteForm atencionForm, Usuario usuarioLogin) throws DAOException, ServiceException {
 		try{
 		    /***************************************************
@@ -141,6 +157,10 @@ public class TicketService {
 		     *                TICKET DETALLE 
 		     ***************************************************/
 			 TicketDetalle detalle = null;
+			 BigDecimal montoSinDescuento = BigDecimal.ZERO;
+			 BigDecimal totalDescuento = BigDecimal.ZERO;
+
+			 
 			 int item = 0;
 		     for (AtencionPendienteDetalle a : atencionForm.getlAtencionDetalle()) {
 		    	detalle = new TicketDetalle();
@@ -149,12 +169,30 @@ public class TicketService {
 		        detalle.setDescripcion(a.getNombreAnalisis());
 		        detalle.setIdAtencion(a.getIdAtencion());
 		        detalle.setIdTicket(ticket.getIdTicket());
-		        detalle.setImporte(a.getMonto()); //validar
+		        //detalle.setImporte(a.getMonto());
+		        montoSinDescuento = a.getPrecio().multiply(BigDecimal.valueOf(a.getCantidad()));
+		        detalle.setImporte(montoSinDescuento);
+		        
 		        detalle.setNumItem(item);
 		        detalle.setNumSerie(ticket.getNumSerie());
 		        detalle.setNumTicket(ticket.getNumTicket());
+		        detalle.setTipo(ServiceConstante.TICKETDETALLE_ANALISIS);
 	        	ticketDetalleDAO.create(detalle);
 	        	item++;
+	        	
+	        	/**
+	        	 * Insertamos el descuento en el detalle del ticket
+	        	 */
+		    	if(a.getPorcentajeDescuento().compareTo(BigDecimal.ZERO) != 0){
+		    		totalDescuento = a.getMonto().subtract(montoSinDescuento);
+		    		detalle.setDescripcion(ServiceConstante.DESCRIP_DESCUENTO_TICKET + " ("+a.getPorcentajeDescuentoString() +"%)");
+		    		detalle.setImporte(totalDescuento);
+		    		detalle.setTipo(ServiceConstante.TICKETDETALLE_DESCUENTO);
+			        detalle.setNumItem(item);
+		        	ticketDetalleDAO.create(detalle);
+		        	item++;
+		    	}
+		    	
 			}
 	    	miLog.info("Nuevo TicketPendiente["+ticket+"] creado con ["+atencionForm.getlAtencionDetalle().size()+"] TicketDetalles."+usuarioLogin.getLogUser());
 		} catch(DAOException ex){

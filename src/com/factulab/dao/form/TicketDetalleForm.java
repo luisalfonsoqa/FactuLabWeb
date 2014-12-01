@@ -12,6 +12,7 @@ public class TicketDetalleForm implements Serializable {
     private Integer cantidad;
     private String nombre;
     private BigDecimal monto;
+    private int tipo;
 	public Integer getCantidad() {
 		return cantidad;
 	}
@@ -34,7 +35,14 @@ public class TicketDetalleForm implements Serializable {
 	@Override
 	public String toString() {
 		return "TicketDetalleForm [cantidad=" + cantidad + ", nombre=" + nombre
-				+ ", monto=" + monto + "]";
+				+ ", monto=" + monto + ", tipo=" + tipo + "]";
 	}
+	public int getTipo() {
+		return tipo;
+	}
+	public void setTipo(int tipo) {
+		this.tipo = tipo;
+	}
+	
 }
 

@@ -30,6 +30,10 @@ public class ServiceConstante {
 	
 	public static String CONCATENADOR = "|";
 	
+	public static String DESCRIP_DESCUENTO_TICKET = "DESCUENTO";
+	public static int TICKETDETALLE_DESCUENTO = 2;
+	public static int TICKETDETALLE_ANALISIS = 1;
+	
 	/**
 	 * AMBIENTE PRODUCCION
 	 */

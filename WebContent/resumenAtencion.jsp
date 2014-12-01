@@ -96,12 +96,13 @@
 			<table border="0"  style="width: 100%; padding: 0; margin: 0;" id="tableListadoAnalisis" class="ui-widget ui-widget-content">
 				<thead>
 		    		<tr class="ui-widget-header">
-						<td style="width: 80px;" align="center"><label>Cantidad</label></td>
-						<td style="width: 200px;"><label>Descripción</label></td>
-						<td style="width: 80px;" align="right"><label>P Unit S/D</label></td>
-						<td style="width: 80px;" align="right"><label>Descuento</label></td>
-						<td style="width: 80px;" align="right"><label>P Unit C/D</label></td>
-						<td style="width: 80px;" align="right"><label>Valor Venta</label></td>
+						<td style="width: 370px;"><label>Descripción</label></td>
+						<td style="width: 250px;"><label>Sección</label></td>
+						<td style="width: 60px;" align="center"><label>P Unit S/D</label></td>
+						<td style="width: 60px;" align="center"><label>Desc (%)</label></td>
+						<td style="width: 60px;" align="center"><label>P Unit C/D</label></td>
+						<td style="width: 40px;" align="center"><label>Cant</label></td>
+						<td style="width: 60px;" align="center"><label>P Final</label></td>
 					</tr>
 				</thead>
 				<tbody style="font-size: 11px;">
@@ -109,11 +110,12 @@
 						for (AnalisisForm a : atencionForm.getlAnalisis()) {
 					%>
 			       	<tr>
-				       	<td align="center"><%=a.getCantidad()%></td>
 				       	<td><%=a.getNombre()%></td>
+				       	<td><%=a.getNombreSeccion()%></td>
 				       	<td align="right"><%=a.getPrecioUnitConTarifaString()%></td>
-				       	<td align="right"><%=atencionForm.getPorcentajeDescuentoString()%></td>
+				       	<td align="right"><%=a.getDescuentoString()%></td>
 				       	<td align="right"><%=a.getPrecioUnitConDescuentoString()%></td>
+				 		<td align="center"><%=a.getCantidad()%></td>
 				       	<td align="right"><%=a.getTotalConDescuentoString()%></td>
 			       	</tr>
 					<%
@@ -124,14 +126,12 @@
 			</div>
 			<table border="0" style="width: 100%; padding: 0; margin: 0; height: 20px; vertical-align: middle;" id="tableAgregarAnalisis" class="ui-widget-header">
 			<tr>
-				<td width="100px"></td>
-				<td width="190px"><label>PRECIO VENTA (S/.):</label></td>
-				<td width="80px" align="left"><input type="text" size="8" disabled="disabled" value="<%=atencionForm.getTotalSinDescuentoString()%>"/></td>
-				<td width="150px" align="right"><label>DESC (%):</label></td>
-				<td width="150px" align="left"><input type="text" size="3" value="<%=atencionForm.getPorcentajeDescuentoString()%>"  disabled="disabled" /></td>
-				<td width="150px" align="right"><label>TOTAL: (S/.):</label></td>
-				<td width="100px" align="center"><input type="text" size="8" disabled="disabled"  value="<%=atencionForm.getTotalConDescuentoString()%>"/></td>
-				<td align="right">
+				<td></td>
+				<td width="120" align="right"><label>PRECIO VENTA (S/.):</label></td>
+				<td width="80px" align="left"><input type="text" size="8" disabled="disabled" class="numero" value="<%=atencionForm.getTotalSinDescuentoString()%>"/></td>
+				<td width="120" align="right"><label>TOTAL: (S/.):</label></td>
+				<td width="100px" align="center"><input type="text" size="8" disabled="disabled" class="numero"  value="<%=atencionForm.getTotalConDescuentoString()%>"/></td>
+				<td width="200px" align="right">
 					<%
 						if(atencionForm.getCodigoOmega() == null) {
 					%>

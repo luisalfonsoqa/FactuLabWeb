@@ -31,7 +31,7 @@ public class TicketDetalleDAO {
 		try {
 			cn = new ConectaDB().getConexion();
 			query = "EXEC FacturaLabSQL.dbo.InsertarTicketDetalle @numSerie = ?, @numItem = ? , @numTicket = ?, @cantidad = ?, "
-					+ "@descripcion = ?, @importe = ?, @idAtencion = ?, @idTicket = ?, @idAnalisis = ? ";
+					+ "@descripcion = ?, @importe = ?, @idAtencion = ?, @idTicket = ?, @idAnalisis = ?, @tipo = ? ";
 			ps = cn.prepareStatement(query);
 			
 			ps.setInt(1, ticketDetalle.getNumSerie());
@@ -43,6 +43,7 @@ public class TicketDetalleDAO {
 			ps.setInt(7, ticketDetalle.getIdAtencion());
 			ps.setLong(8,ticketDetalle.getIdTicket());
 			ps.setInt(9, ticketDetalle.getIdAnalisis());
+			ps.setInt(10, ticketDetalle.getTipo());
 			ps.executeUpdate();
 			ps.close();
 			cn.close();
@@ -68,7 +69,7 @@ public class TicketDetalleDAO {
 		String query = null;
 		try {
 			cn = new ConectaDB().getConexion();
-			query ="SELECT cantidad, descripcion, importe FROM ticketdetalle where idticket = ?";
+			query ="SELECT cantidad, descripcion, importe, tipo FROM ticketdetalle where idticket = ?";
 			ps = cn.prepareStatement(query); 
 			ps.setLong(1, id);
 			rs = ps.executeQuery();
@@ -77,6 +78,7 @@ public class TicketDetalleDAO {
 				t.setCantidad(rs.getInt("cantidad"));
 				t.setNombre(rs.getString("descripcion"));
 				t.setMonto(rs.getBigDecimal("importe"));
+				t.setTipo(rs.getInt("tipo"));
 		        list.add(t);
 			}
 			rs.close();

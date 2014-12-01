@@ -33,6 +33,8 @@ public class TicketDetalle implements Serializable {
     private long idTicketDetalle;
     private long idTicket;
     private Integer idAnalisis;
+    private int tipo;
+    
 	public Integer getNumSerie() {
 		return numSerie;
 	}
@@ -93,14 +95,20 @@ public class TicketDetalle implements Serializable {
 	public void setIdAnalisis(Integer idAnalisis) {
 		this.idAnalisis = idAnalisis;
 	}
+	public int getTipo() {
+		return tipo;
+	}
+	public void setTipo(int tipo) {
+		this.tipo = tipo;
+	}
 	@Override
 	public String toString() {
 		return "TicketDetalle [numSerie=" + numSerie + ", numItem=" + numItem
 				+ ", numTicket=" + numTicket + ", cantidad=" + cantidad
 				+ ", descripcion=" + descripcion + ", importe=" + importe
 				+ ", idAtencion=" + idAtencion + ", idTicketDetalle="
-				+ idTicketDetalle + ", idTicket=" + idTicket + ", idAnalisis="
-				+ idAnalisis + "]";
+				+ idTicketDetalle + ", idTicket=" + idTicket + ", idAnalisis=" + idAnalisis
+				+ ", tipo=" + tipo +"]";
 	}
     
 }

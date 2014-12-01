@@ -41,6 +41,7 @@ public class AnalisisService {
           */
 		 AnalisisForm analisisForm = new AnalisisForm(analisis);
 		 analisisForm.setCantidad(1);
+		 analisisForm.setDescuento(BigDecimal.ZERO);
 		 //miLog.info("Agregar Analisis nuevo al listado. analisisForm["+analisisForm.toString() + "] atencionForm["+ atencionForm.toString()+"]");
          agregarAnalisisNuevo(atencionForm, analisisForm);
 	}
@@ -132,26 +133,43 @@ public class AnalisisService {
 		   BigDecimal subTotal = BigDecimal.ZERO;
 		   BigDecimal totalAcomulado = BigDecimal.ZERO;
 		   BigDecimal total = BigDecimal.ZERO;
+		   BigDecimal cantidad = BigDecimal.ZERO;
 		
 		   for (AnalisisForm analisisForm : atencionForm.getlAnalisis()) {
-			   detalle = new String[11];
+			   detalle = new String[13];
+			   /* LEYENDA
+			    0. precio unitario con tarifa
+				1. descuento por unidad
+				2. precio unitario con descuento - sinredondear
+				3. precio unitario con descuento - redondeado
+				4. cantidad
+				5. subtotal - sin redondear
+				6. subtotal - redondeado
+				7. subtotal acomulado
+				8. total - sin redondear
+				9. total - redondeado
+				10 total - acomulado
+			    */
+			   
 		       /**
 		        * Recalculamos el Total sin descuento
 		        */
+			   cantidad = new BigDecimal(analisisForm.getCantidad());
+			   
 //			   System.out.println(analisisForm.getPrecioUnitConTarifa());
 			   detalle[0] = analisisForm.getPrecioUnitConTarifa().toString();
 //			   System.out.println(analisisForm.getCantidad());
-			   detalle[1] = analisisForm.getCantidad().toString();
-			   subTotal = analisisForm.getPrecioUnitConTarifa().multiply(new BigDecimal(analisisForm.getCantidad()));
+			   detalle[4] = analisisForm.getCantidad().toString();
+			   subTotal = analisisForm.getPrecioUnitConTarifa().multiply(cantidad);
 //			   System.out.println(subTotal);
-			   detalle[2] = subTotal.toString();
+			   detalle[5] = subTotal.toString();
 			   subTotal = ServiceUtil.redondearNumero(subTotal);
 //			   System.out.println(subTotal);
-			   detalle[3] = subTotal.toString();
+			   detalle[6] = subTotal.toString();
 		       subTotalAcomulado = subTotalAcomulado.add(subTotal); //TOTAL ACOMULADO SIN DESCUENTO
 		       analisisForm.setTotalSinDescuento(subTotal);
 //		       System.out.println(subTotalAcomulado);
-		       detalle[4] = subTotalAcomulado.toString();
+		       detalle[7] = subTotalAcomulado.toString();
 		       
 		       
 		       //System.out.println("AnalisisServioce - actualizarAcomulados - subTotal - "+analisisForm.getTotalSinDescuento() + " "+subTotal);
@@ -159,17 +177,21 @@ public class AnalisisService {
 		       /**
 		        * Recalculamos el Total con el porcentaje de descuento ingresado (%)
 		        */
-		       descuentoPorUnidad = analisisForm.getPrecioUnitConTarifa().multiply(atencionForm.getPorcentajeDescuento()).divide(new BigDecimal("100"));
+		       //Descuento por Atencion
+		       //descuentoPorUnidad = analisisForm.getPrecioUnitConTarifa().multiply(atencionForm.getPorcentajeDescuento()).divide(new BigDecimal("100"));
+		       //Descuento por Analisis
+		       descuentoPorUnidad = analisisForm.getPrecioUnitConTarifa().multiply(analisisForm.getDescuento()).divide(new BigDecimal("100"));
 //		       System.out.println(descuentoPorUnidad);
-		       detalle[5] = descuentoPorUnidad.toString();
+		       detalle[1] = descuentoPorUnidad.toString();
 		       precioUnitarioConDescuento = analisisForm.getPrecioUnitConTarifa().subtract(descuentoPorUnidad);
 //		       System.out.println(precioUnitarioConDescuento);
-		       detalle[6] = precioUnitarioConDescuento.toString();
+		       detalle[2] = precioUnitarioConDescuento.toString();
 		       precioUnitarioConDescuento = ServiceUtil.redondearNumero(precioUnitarioConDescuento);
 //		       System.out.println(precioUnitarioConDescuento);
-		       detalle[7] = precioUnitarioConDescuento.toString();
+		       detalle[3] = precioUnitarioConDescuento.toString();
 		       analisisForm.setPrecioUnitConDescuento(precioUnitarioConDescuento);
-		       total = precioUnitarioConDescuento.multiply(new BigDecimal(Integer.toString(analisisForm.getCantidad())));
+		       total = precioUnitarioConDescuento.multiply(cantidad);
+		       
 //		       System.out.println(total);
 		       detalle[8] = total.toString();
 		       total = ServiceUtil.redondearNumero(total);
